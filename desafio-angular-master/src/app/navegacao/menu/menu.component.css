@@ -1,0 +1,17 @@
+.logado-color{
+    color:white !important;
+}
+
+.logado-color-sair{
+    color: rgb("#90caf9");
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.carrinho-color{
+    color: #FFD369 !important;
+}
+
+.nav-personalizado{
+    color: #EEEEEE !important;
+}

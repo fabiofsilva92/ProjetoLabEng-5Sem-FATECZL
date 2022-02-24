@@ -1,0 +1,46 @@
+
+
+<div class="container main-container mt-5">
+
+    <div class="">
+        <form [formGroup]="loginForm">
+            <div class="form-group row text-center">
+                <h3>Login do Sistema de Vendas</h3>
+            </div>
+
+            <div class="form-group">
+                <div class="d-flex justify-content-center">
+                    <div style="width: 70px;" class="d-flex justify-content-center">
+                        <label for="login" class="pt-2">Login: </label>
+                    </div>
+
+                    <input type="text" class="form-control form-login-style ms-2" formControlName="login" name="login"
+                        id="login" placeholder="Usuário">
+                </div>
+
+            </div>
+            <div class="form-group mt-2">
+                <div class="d-flex justify-content-center">
+                    <div style="width: 70px;">
+                        <label for="password" class="pt-2">Password: </label>
+                    </div>
+
+                    <input type="password" class="form-control form-login-style ms-2" formControlName="password"
+                        name="senha" id="senha" placeholder="Senha">
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                <h4 *ngIf="sessao" style="color:red">{{sessao}}</h4>
+            </div>
+            
+
+            <div class="d-flex justify-content-center mt-3">
+                
+                <button type="button" class="btn btn-primary" (click)="login()" style="background-color: rgb(#1A73E8) !important;">Acessar</button>
+                <button type="button" class="btn btn-secondary ms-5"  [routerLink]="['/cadastro-cliente']" style="background-color: white ; color: black !important;">Criar conta</button>
+            </div>
+            
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #222831 !important;">
+  <div class="container">
+    <a class="navbar-brand carrinho-color me-5" [routerLink]="['/']">Desafio Angular</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+      aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link nav-personalizado" *ngIf="isLogged == 'true' ? true : false" [routerLink]="['/produtos']">Produtos <span
+              class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-personalizado" *ngIf="role == 'ADMIN' " [routerLink]="['/cadastro-produto']">Cadastrar Produtos</a>
+        </li>
+        
+      </ul>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item me-4">
+          <a class="nav-link carrinho-color" *ngIf="isLogged == 'true' ? true : false" [routerLink]="['/carrinho']"> <span class="fa fa-shopping-cart me-2"></span>Carrinho</a>
+        </li>
+        <li class="nav-item me-4">
+          <a class="nav-link carrinho-color" *ngIf="isLogged == 'true' ? true : false" [routerLink]="['/pedidos']"> Meus Pedidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="logado-color">{{logged}}</a> <br>
+          <div class="d-flex justify-content-end">
+            <a class="logado-color-sair" (click)="logout()" *ngIf="isLogged == 'true' ? true : false"> Sair?</a>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>

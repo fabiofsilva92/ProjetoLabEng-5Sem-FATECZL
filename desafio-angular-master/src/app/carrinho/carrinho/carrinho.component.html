@@ -1,0 +1,87 @@
+<div class="div-body">
+    <div class="Cart-Container" *ngIf="!pedidoRealizado && compras.length != 0">
+        <div class="CustomHeader">
+            <h3 ngClass="CustomHeading">Carrinho de compras <span *ngIf="compras.length == 0">vazio</span></h3>
+            <h5 class="CustomAction" (click)="limparCarrinho()">Remove tudo</h5>
+        </div>
+        <div *ngFor="let compra of compras">
+            <div class="CustomCart-Items">
+                <div class="Custom-image-box">
+                    <img src="{{compra.produto.foto}}" style="height: 120px;" />
+                </div>
+                <div class="Custom-about">
+                    <span class="Custom-title">{{compra.produto.descricao}}</span>
+                    <div class="Custom-subtitle">R$ {{compra.produto.precoUnitario}} / {{compra.produto.unidade}}</div>
+                    <!-- <img src="" alt="oi" style="height: 30px;" /> -->
+                </div>
+
+                <div class="Custom-counter">
+                    <div class="Custom-btn" (click)="diminuirQuantidadeProduto(compra)">-</div>
+                    <div class="Custom-counter">{{compra.quantidade}}</div>
+                    <div class="Custom-btn" (click)="aumentarQuantidadeProduto(compra)">+</div>
+                </div>
+
+                <div class="Custom-prices">
+                    <div class="Custom-amount">{{compra.valorTotal |currency:'BRL':'symbol':'1.2-2':'pt'}}</div>
+                    <!-- <div class="Custom-save"><u>Save for later</u></div> -->
+                    <div class="Custom-remove" (click)="excluirDoCarrinho(compra.produto.id)"><u>Excluir do Carrinho</u>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row d-flex justify-content-end">
+            <label for="cep" class="pt-2 pe-2">Insira o CEP: </label>
+            <input [(ngModel)]="cep" id="cep" type="text" class="form-control" id="inputAddress"
+                placeholder="CEP (apenas numeros)" style="width: 300px;">
+            <input (click)="verificaCEP()" type="button" class="btn btn-primary me-3 ms-3"
+                style="background-color: #9BC1F1; color: black; border-color: white; border-radius: 20px;"
+                value="Verificar CEP">
+
+        </div>
+        <div class="d-flex justify-content-end mt-2" style="margin-right: 100px;">
+            <div class="alert alert-danger" style="width: 350px;" *ngIf="erroCEP">
+                <strong>Erro!</strong> Favor preencher o CEP corretamente.
+            </div>
+        </div>
+
+
+        <div class="d-flex justify-content-end mt-2 me-5" *ngIf="objetoCEP != '' && erroCEP == false">
+
+            <div class="Custom-card ">
+                <div class="spinner-border" *ngIf="!objetoCEP.street" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <address *ngIf="objetoCEP.street">
+                    {{objetoCEP.street}}, {{objetoCEP.cep}}<br />
+                    {{objetoCEP.neighborhood}},<br />
+                    {{objetoCEP.city}}, {{objetoCEP.state}}<br />
+                    Brasil
+                </address>
+            </div>
+        </div>
+
+
+        <hr>
+        <div class="Custom-checkout">
+            <div class="Custom-total">
+                <div>
+                    <div class="Custom-Subtotal">Sub-Total</div>
+                    <div class="Custom-items">{{quantidadeItens}} items</div>
+                </div>
+                <div class="Custom-total-amount">{{subTotal |currency:'BRL':'symbol':'1.2-2':'pt'}}</div>
+            </div>
+            <button class="Custom-button" (click)="checkout()" *ngIf="!loadingPedido">Checkout</button>
+            <div class="spinner-border" *ngIf="loadingPedido" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+    <div class="Cart-Container" *ngIf="compras.length == 0 && !pedidoRealizado">
+        <div class="d-flex justify-content-center"> Carrinho de compras vazio</div>
+        <button class="Custom-button"  *ngIf="!loadingPedido" (click)="paginaDeProdutos()">Ver Produtos</button>
+    </div>
+    <div class="Cart-Container" *ngIf="pedidoRealizado ">
+        <div class="d-flex justify-content-center"> Pedido realizado com sucesso</div>
+        <button class="Custom-button"  *ngIf="!loadingPedido " (click)="paginaDeProdutos()">Ver Produtos</button>
+    </div>
+</div>

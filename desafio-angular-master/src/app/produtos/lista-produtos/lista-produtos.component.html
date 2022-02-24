@@ -1,0 +1,63 @@
+<div class="container main-container mt-5">
+
+    <div class="row text-center">
+
+        <div *ngFor="let produto of produtos" class="col-md-4" style="padding-bottom: 30px;">
+            <div *ngIf="toFloat(produto.qtdEstoque)  > 0">
+                <div class="card h-100" style=" background-color: #EEEEEE !important;">
+                    <a class="text-decoration-none">
+                        <div style="align-content: center;">
+                            <img src="{{produto.foto}}" height="165px" width="253px" alt="">
+                        </div>
+                    </a>
+    
+                    <h4 class="card-title">{{produto.descricao | titlecase}}</h4>
+    
+    
+                    <div class="card-body">
+                        <div>
+                            <h4 class="card-text">
+                                Por: {{produto.precoUnitario |currency:'BRL':'symbol':'1.2-2':'pt' }}
+                            </h4>
+                        </div>
+                    </div>
+       
+    
+    
+                    <div class="card-footer">
+                        <div *ngIf="!produto.isAdicionado">
+                            <div>
+                                <label>Quantidade: </label>
+                                <input class="ms-2 me-1" type="button" id="plus" value='-'
+                                    (click)="diminuirQuantidade(produto)" />
+                                <input class="text-centre" readonly id="quant" name="quant" class="text"
+                                    style="width: 27px;" type="text" value="{{produto.qtdPretentida}}" maxlength="5" />
+                                <input class="ms-1" type="button" id="minus" value='+'
+                                    (click)="aumentarQuantidade(produto)">
+                            </div>
+                            <a class="btn btn-primary mt-3" *ngIf="!produto.isAdicionado"
+                                (click)="adicionarAoCarrinho(produto)">
+                                <span class="fa fa-shopping-cart me-2"></span> Adicionar ao carrinho
+                            </a>
+                        </div>
+                        <div *ngIf="produto.isAdicionado" style="color: green;">Adicionado
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-check" viewBox="0 0 16 16">
+                                <path
+                                    d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="div-body" *ngIf="produtos.length == 0">
+    <div class="Cart-Container" >
+        <h3 class="ms-3 mt-3">Sem produtos no momento</h3>
+    </div>
+</div>
