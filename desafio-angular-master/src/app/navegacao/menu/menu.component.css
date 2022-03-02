@@ -8,6 +8,12 @@
     font-weight: bold;
 }
 
+.logado-color-editar{
+    color: #FFD369;
+    cursor: pointer;
+    font-weight: bold;
+}
+
 .carrinho-color{
     color: #FFD369 !important;
 }

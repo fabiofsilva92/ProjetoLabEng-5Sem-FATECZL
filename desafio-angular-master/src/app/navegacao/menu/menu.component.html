@@ -29,6 +29,7 @@
         <li class="nav-item">
           <a class="logado-color">{{logged}}</a> <br>
           <div class="d-flex justify-content-end">
+            <a class="logado-color-editar me-2" [routerLink]="['/alterar-usuario']" *ngIf="isLogged == 'true' ? true : false"> Editar cadastro</a>
             <a class="logado-color-sair" (click)="logout()" *ngIf="isLogged == 'true' ? true : false"> Sair?</a>
           </div>
         </li>
