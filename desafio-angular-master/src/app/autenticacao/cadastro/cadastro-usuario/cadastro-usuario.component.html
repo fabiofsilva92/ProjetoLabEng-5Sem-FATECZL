@@ -23,18 +23,38 @@
                     </div>
                 </div>
 
+
                 <div class="d-flex justify-content-start mt-2 me-5" *ngIf="objetoCEP != '' && erroCEP == false">
 
                     <div class="Custom-card ">
                         <div class="spinner-border" *ngIf="!objetoCEP.street" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
-                        <address *ngIf="objetoCEP.street">
-                            {{objetoCEP.street}}, <input placeholder="Insira o numero"> {{objetoCEP.cep}}<br />
-                            {{objetoCEP.neighborhood}},<br />
-                            {{objetoCEP.city}}, {{objetoCEP.state}}<br />
-                            Brasil
-                        </address>
+
+                        <div class="form-group mt-2 ">
+                            <label for="">Rua </label>
+                            <input formControlName="rua" type="text" class="form-control">
+                        </div>
+
+
+                        <div class="form-group mt-2">
+                            <label for="">Numero </label>
+                            <input formControlName="numero" type="text" class="form-control">
+                        </div>
+
+
+                        <div class="form-group mt-2">
+                            <label for="">Bairro </label>
+                            <input formControlName="bairro" type="text" class="form-control">
+                        </div>
+
+
+                        <div class="form-group mt-2">
+                            <label for="">Cidade </label>
+                            <input formControlName="cidade" type="text" class="form-control">
+                        </div>
+
+
                     </div>
                 </div>
 

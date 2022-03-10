@@ -3,9 +3,12 @@ package gft.desafio.desafioangularbackend.entities.autenticacao;
 
 
 
+import gft.desafio.desafioangularbackend.entities.Endereco;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Entity
@@ -23,19 +26,23 @@ public class Usuario {
     @NotNull
     private String senha;
 
+    @OneToMany
+    private List<Endereco> enderecos;
+
     @ManyToOne
     private Role role;
 
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String cpf, String senha, Role role) {
+    public Usuario(Long id, String nome, String email, String cpf, String senha, Role role, List<Endereco> enderecos) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;
         this.role = role;
+        this.enderecos = enderecos;
     }
 
     public String getNome() {
@@ -84,6 +91,14 @@ public class Usuario {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
     }
 
     @Override

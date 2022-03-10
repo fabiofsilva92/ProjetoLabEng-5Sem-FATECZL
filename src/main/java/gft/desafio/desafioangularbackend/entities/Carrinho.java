@@ -15,15 +15,13 @@ public class Carrinho {
     private Long id;
     private Date data;
 
-
-
     @OneToMany
     @JoinTable(
-            name = "tb_carrinho_compras",
+            name = "tb_carrinho_produtos",
             joinColumns = @JoinColumn(name = "carrinho_id"),
-            inverseJoinColumns = @JoinColumn(name = "resumo_compra_id")
+            inverseJoinColumns = @JoinColumn(name = "produto_id")
     )
-    private List<Compra> compras;
+    private List<Produto> produtos;
 
     private Double valorTotal;
     private String cep;
@@ -31,10 +29,10 @@ public class Carrinho {
     public Carrinho() {
     }
 
-    public Carrinho(Long id, Date data, List<Compra> compras, Double valortotal, String cep) {
+    public Carrinho(Long id, Date data, List<Produto> produtos, Double valortotal, String cep) {
         this.id = id;
         this.data = data;
-        this.compras = compras;
+        this.produtos = produtos;
         this.valorTotal = valortotal;
         this.cep = cep;
     }
@@ -55,12 +53,12 @@ public class Carrinho {
         this.data = data;
     }
 
-    public List<Compra> getCompras() {
-        return compras;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    public void setCompras(List<Compra> compras) {
-        this.compras = compras;
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 
     public Double getValorTotal() {
@@ -84,7 +82,7 @@ public class Carrinho {
         return "Carrinho{" +
                 "id=" + id +
                 ", data=" + data +
-                ", compras=" + compras +
+                ", produtos=" + produtos +
                 ", valorTotal=" + valorTotal +
                 ", cep='" + cep + '\'' +
                 '}';

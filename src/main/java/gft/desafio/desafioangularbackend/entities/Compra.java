@@ -9,17 +9,19 @@ public class Compra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private Produto produto;
+
+    @OneToOne
+    private Carrinho carrinho;
+
     private Integer quantidade;
     private Double valorTotal;
 
     public Compra() {
     }
 
-    public Compra(Long id, Produto produto, Integer quantidade, Double valorTotal) {
+    public Compra(Long id, Carrinho carrinho, Integer quantidade, Double valorTotal) {
         this.id = id;
-        this.produto = produto;
+        this.carrinho = carrinho;
         this.quantidade = quantidade;
         this.valorTotal = valorTotal;
     }
@@ -32,12 +34,12 @@ public class Compra {
         this.id = id;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public Carrinho getCarrinho() {
+        return this.carrinho;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setCarrinho(Carrinho carrinho) {
+        this.carrinho = carrinho;
     }
 
     public Integer getQuantidade() {
@@ -60,7 +62,7 @@ public class Compra {
     public String toString() {
         return "Compra{" +
                 "id=" + id +
-                ", produto=" + produto +
+                ", carrinho=" + carrinho +
                 ", quantidade=" + quantidade +
                 ", valorTotal=" + valorTotal +
                 '}';

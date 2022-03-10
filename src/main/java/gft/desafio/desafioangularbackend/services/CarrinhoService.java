@@ -43,7 +43,7 @@ public class CarrinhoService {
 
 //        carrinho.setUsuario((Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 
-        carrinho.getCompras().forEach(compra -> {
+        /*carrinho.getProdutos().forEach(compra -> {
             //Retirar o set produto apos validação via ts.
             compra.setProduto(produtoService.buscarProduto(compra.getProduto().getId()));
             compra.setValorTotal(compra.getProduto().getPrecoUnitario()*compra.getQuantidade());
@@ -53,7 +53,7 @@ public class CarrinhoService {
             valorTotal += c.getValorTotal();
         });
 
-        carrinho.setCompras(listaDeComprasSalvas);
+        carrinho.setCompras(listaDeComprasSalvas);*/
         carrinho.setValorTotal(valorTotal);
 
         return carrinhoRepository.save(carrinho);

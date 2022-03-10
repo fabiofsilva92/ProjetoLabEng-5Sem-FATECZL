@@ -56,10 +56,10 @@ public class CarrinhoController {
 //        carrinho.setUsuario(usuario);
         carrinho.setData(data);
 
-        carrinho.getCompras().forEach(c -> {
+/*        carrinho.getCompras().forEach(c -> {
             System.out.println("Quantidade antes: "+c.getProduto().getQtdEstoque());
             c.getProduto().setQtdEstoque(c.getProduto().getQtdEstoque()-c.getQuantidade());
-        });
+        });*/
 
         System.out.println("Carrinho: "+ carrinho);
 

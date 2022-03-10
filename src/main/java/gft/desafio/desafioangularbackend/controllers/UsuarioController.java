@@ -25,8 +25,9 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping
-    public ResponseEntity<Usuario> buscarUsuario(@RequestParam String email){
+    /*@GetMapping
+    public ResponseEntity<Usuario> buscarUsuario(
+            @RequestParam String email){
 
         Usuario usuario = (Usuario) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
@@ -36,7 +37,7 @@ public class UsuarioController {
             return ResponseEntity.ok(new Usuario(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getCpf(), "", usuario.getRole()));
         }
          return ResponseEntity.badRequest().build();
-    }
+    }*/
 
     @PostMapping
     public ResponseEntity<Usuario> saveUsuario(@RequestBody Usuario usuario){

@@ -35,6 +35,10 @@ export class CadastroUsuarioComponent implements OnInit {
       nome: ['', Validators.required],
       email: ['', Validators.required],
       cep: ['', Validators.required],
+      rua: ['', Validators.required],
+      numero: ['', Validators.required],
+      bairro: ['', Validators.required],
+      cidade: ['', Validators.required],
       cpf: ['', Validators.required],
       senha: ['', Validators.required]
     })
@@ -69,6 +73,10 @@ export class CadastroUsuarioComponent implements OnInit {
       "nome": this.f['nome'].value,
       "email": this.f['email'].value,
       "cep": this.f['cep'].value,
+      "rua" : this.f['rua'].value,
+      "numero" : this.f['numero'].value,
+      "bairro" : this.f['bairro'].value,
+      "cidade" : this.f['cidade'].value,
       "cpf": this.f['cpf'].value,
       "senha": senha,
     }
@@ -128,6 +136,9 @@ export class CadastroUsuarioComponent implements OnInit {
         this.objetoCEP.street = this.objetoCEP.street.split("-")[0];
         console.log("OLHA O TESTE DE RUA: " + this.objetoCEP.street)
         this.erroCEP = false;
+        this.f["rua"].setValue(this.objetoCEP.street);
+        this.f["bairro"].setValue(this.objetoCEP.neighborhood);
+        this.f["cidade"].setValue(this.objetoCEP.city);
       },
       error: (err) => {
         console.log("Olha o erro: ", err)
