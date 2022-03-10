@@ -1,36 +1,39 @@
 
 package gft.desafio.desafioangularbackend.entities;
 
-import javax.persistence.*;
+import com.sun.istack.NotNull;
 
-@Entity
-@Table(name = "tb_endereco")
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
+
+@Embeddable
 public class Endereco {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
+    @NotBlank
     private String cep;
+
+    @NotBlank
     private String rua;
+
+    @NotNull
     private String numero;
+
+    @NotBlank
     private String bairro;
+
+    @NotBlank
     private String cidade;
 
-    public Endereco(Long id, String cep, String rua, String numero, String bairro, String cidade) {
-        this.id = id;
+    public Endereco() {
+    }
+
+    public Endereco(String cep, String rua, String numero, String bairro, String cidade) {
         this.cep = cep;
         this.rua = rua;
         this.numero = numero;
         this.bairro = bairro;
         this.cidade = cidade;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getCep() {

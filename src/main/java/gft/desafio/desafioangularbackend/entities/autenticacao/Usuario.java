@@ -1,14 +1,11 @@
 package gft.desafio.desafioangularbackend.entities.autenticacao;
 
 
-
-
+import com.sun.istack.NotNull;
 import gft.desafio.desafioangularbackend.entities.Endereco;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 
 @Entity
@@ -26,8 +23,8 @@ public class Usuario {
     @NotNull
     private String senha;
 
-    @OneToMany
-    private List<Endereco> enderecos;
+    @Embedded
+    private Endereco enderecos;
 
     @ManyToOne
     private Role role;
@@ -35,14 +32,22 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String cpf, String senha, Role role, List<Endereco> enderecos) {
+    public Usuario(Long id, String nome, String email, String cpf, String senha, Endereco enderecos, Role role) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;
-        this.role = role;
         this.enderecos = enderecos;
+        this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -61,14 +66,6 @@ public class Usuario {
         this.email = email;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getCpf() {
         return cpf;
     }
@@ -85,31 +82,19 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Endereco getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(Endereco enderecos) {
+        this.enderecos = enderecos;
+    }
+
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
-
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", senha='" + senha + '\'' +
-                ", role=" + role +
-                '}';
     }
 }

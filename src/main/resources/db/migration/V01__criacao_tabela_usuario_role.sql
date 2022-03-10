@@ -9,6 +9,11 @@ nome VARCHAR(255) NOT NULL,
 email VARCHAR(255) NOT NULL,
 cpf VARCHAR(255) NOT NULL,
 senha VARCHAR(255) NOT NULL,
+bairro VARCHAR(255),
+cep VARCHAR(255),
+cidade VARCHAR(255),
+numero INTEGER ,
+rua VARCHAR(255),
 role_id BIGINT,
 FOREIGN KEY (role_id) REFERENCES tb_role(id)
 );
