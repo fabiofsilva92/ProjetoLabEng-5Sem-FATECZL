@@ -13,7 +13,7 @@ public class Venda {
     private Long id;
 
     @OneToOne
-    private Carrinho carrinho;
+    private Compra compra;
 
     @ManyToOne
     private Usuario usuario;
@@ -26,18 +26,18 @@ public class Venda {
         this.usuario = usuario;
     }
 
-    public Venda(Long id, Carrinho carrinho, Usuario usuario) {
+    public Venda(Long id, Compra compra, Usuario usuario) {
         this.id = id;
-        this.carrinho = carrinho;
+        this.compra = compra;
         this.usuario = usuario;
     }
 
     public Venda() {
     }
 
-    public Venda(Long id, Carrinho carrinho) {
+    public Venda(Long id, Compra compra) {
         this.id = id;
-        this.carrinho = carrinho;
+        this.compra = compra;
     }
 
     public Long getId() {
@@ -48,19 +48,11 @@ public class Venda {
         this.id = id;
     }
 
-    public Carrinho getCarrinho() {
-        return carrinho;
+    public Compra getCompra() {
+        return compra;
     }
 
-    public void setCarrinho(Carrinho carrinho) {
-        this.carrinho = carrinho;
-    }
-
-    @Override
-    public String toString() {
-        return "Venda{" +
-                "id=" + id +
-                ", carrinho=" + carrinho +
-                '}';
+    public void setCompra(Compra compra) {
+        this.compra = compra;
     }
 }

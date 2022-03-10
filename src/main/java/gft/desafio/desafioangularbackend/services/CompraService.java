@@ -1,7 +1,8 @@
 package gft.desafio.desafioangularbackend.services;
 
-import gft.desafio.desafioangularbackend.entities.Compra;
+import gft.desafio.desafioangularbackend.entities.Carrinho;
 
+import gft.desafio.desafioangularbackend.entities.Compra;
 import gft.desafio.desafioangularbackend.repositories.CompraRepository;
 import org.springframework.stereotype.Service;
 

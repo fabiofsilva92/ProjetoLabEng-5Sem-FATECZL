@@ -24,7 +24,7 @@ public class Usuario {
     private String senha;
 
     @Embedded
-    private Endereco enderecos;
+    private Endereco endereco;
 
     @ManyToOne
     private Role role;
@@ -32,13 +32,13 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String cpf, String senha, Endereco enderecos, Role role) {
+    public Usuario(Long id, String nome, String email, String cpf, String senha, Endereco endereco, Role role) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;
-        this.enderecos = enderecos;
+        this.endereco = endereco;
         this.role = role;
     }
 
@@ -82,12 +82,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Endereco getEnderecos() {
-        return enderecos;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setEnderecos(Endereco enderecos) {
-        this.enderecos = enderecos;
+    public void setEndereco(Endereco enderecos) {
+        this.endereco = enderecos;
     }
 
     public Role getRole() {

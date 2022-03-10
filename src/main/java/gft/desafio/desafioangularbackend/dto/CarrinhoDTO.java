@@ -1,6 +1,5 @@
 package gft.desafio.desafioangularbackend.dto;
 
-import gft.desafio.desafioangularbackend.entities.Compra;
 import gft.desafio.desafioangularbackend.entities.Produto;
 
 import java.util.Date;

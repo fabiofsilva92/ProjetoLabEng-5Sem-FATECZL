@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConstants } from '../app-constants';
+import { Produto } from '../model/produto';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,7 @@ export class CarrinhoService {
 
     var carrinho = {
       //"usuario": { "email": localStorage.getItem("usuario") },
-      "compras": compras,
+      "resumoProdutos": compras,
       "valorTotal": subTotal,
       "cep": cep
     }
@@ -60,13 +61,54 @@ export class CarrinhoService {
     console.log("OLHA O CARRINHO: ", carrinho)
     //Realizar pipe
 
-    return this.http.post(AppConstants.baseServidor + "carrinho", JSON.parse(JSON.stringify(carrinho))).pipe(
+    return this.http.post(AppConstants.baseServidor + "compra", JSON.parse(JSON.stringify(carrinho))).pipe(
       data => {
         return data;
       }
     )
 
 
+  }
+
+  adicionarAoCarrinho(produto: Produto){
+    console.log("Produto solicitado a ser adicionado: ", produto)
+    
+    var carrinhoCompra = JSON.parse(localStorage.getItem("resumoCarrinhoProduto") + "")
+
+    console.log("Vindo do localStorage: ", carrinhoCompra)
+
+    //Lista de produtos que são iguais do produto recem adicionado ao carrinho 
+    var encontrados = carrinhoCompra.filter( (element: { produto: { id: number; }; }) => element.produto.id == produto.id);
+   
+    console.log("Lista de produtos que são iguais do produto recem adicionado ao carrinho : ",encontrados)
+
+    var valorAtualizado :number =  produto.qtdPretentida * (parseFloat(produto.precoUnitario));
+    var quantidadeAtualizada :number = produto.qtdPretentida;
+
+    for(var i = 0; i<encontrados.length; i++) {
+      valorAtualizado += parseFloat(encontrados[i].valorTotal);
+      quantidadeAtualizada += parseFloat(encontrados[i].quantidade);
+    }
+
+    //Lista de produtos que diferem do produto recem adicionado ao carrinho 
+    var encontrados2 = carrinhoCompra.filter( (element: { produto: { id: number; }; }) => element.produto.id != produto.id);
+
+    console.log("Lista de produtos que diferem do produto recem adicionado ao carrinho : ",encontrados2)
+
+    produto.qtdPretentida = quantidadeAtualizada;
+
+    var compra = {
+      "produto": produto,
+      "quantidade": quantidadeAtualizada
+    }
+
+    console.log("Compra atualizada : ", compra)
+
+    encontrados2.push(compra);
+
+    console.log("Adicionado a compra atualizado: ",encontrados2)
+
+    localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(encontrados2))
   }
 
 

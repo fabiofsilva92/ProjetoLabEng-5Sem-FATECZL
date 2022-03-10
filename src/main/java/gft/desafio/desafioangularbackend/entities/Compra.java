@@ -13,16 +13,15 @@ public class Compra {
     @OneToOne
     private Carrinho carrinho;
 
-    private Integer quantidade;
     private Double valorTotal;
 
     public Compra() {
     }
 
-    public Compra(Long id, Carrinho carrinho, Integer quantidade, Double valorTotal) {
+    public Compra(Long id, Carrinho carrinho,  Double valorTotal) {
         this.id = id;
         this.carrinho = carrinho;
-        this.quantidade = quantidade;
+
         this.valorTotal = valorTotal;
     }
 
@@ -42,13 +41,7 @@ public class Compra {
         this.carrinho = carrinho;
     }
 
-    public Integer getQuantidade() {
-        return quantidade;
-    }
 
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
 
     public Double getValorTotal() {
         return valorTotal;
@@ -63,7 +56,6 @@ public class Compra {
         return "Compra{" +
                 "id=" + id +
                 ", carrinho=" + carrinho +
-                ", quantidade=" + quantidade +
                 ", valorTotal=" + valorTotal +
                 '}';
     }

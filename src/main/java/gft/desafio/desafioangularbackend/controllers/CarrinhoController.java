@@ -3,6 +3,7 @@ package gft.desafio.desafioangularbackend.controllers;
 import gft.desafio.desafioangularbackend.dto.CarrinhoDTO;
 import gft.desafio.desafioangularbackend.dto.mapper.CarrinhoMapper;
 import gft.desafio.desafioangularbackend.entities.Carrinho;
+import gft.desafio.desafioangularbackend.entities.ResumoProdutoCarrinho;
 import gft.desafio.desafioangularbackend.entities.Venda;
 import gft.desafio.desafioangularbackend.entities.autenticacao.Usuario;
 import gft.desafio.desafioangularbackend.services.CarrinhoService;
@@ -43,34 +44,35 @@ public class CarrinhoController {
         return ResponseEntity.ok(carrinhoService.listarCarrinhosPorUsuario(usuario));
     }*/
 
-    @PostMapping
-    public ResponseEntity<CarrinhoDTO> saveCarrinho(@RequestBody Carrinho carrinho){
-
-
-//        String email = carrinho.getUsuario().getEmail().split("\"")[1];
-
-        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Date data = new Date();
-
-//        carrinho.setUsuario(usuario);
-        carrinho.setData(data);
-
-/*        carrinho.getCompras().forEach(c -> {
-            System.out.println("Quantidade antes: "+c.getProduto().getQtdEstoque());
-            c.getProduto().setQtdEstoque(c.getProduto().getQtdEstoque()-c.getQuantidade());
-        });*/
-
-        System.out.println("Carrinho: "+ carrinho);
-
-//        System.out.println("Email: " +email);
-
-        Carrinho car = carrinhoService.salvarCarrinho(carrinho);
-        Venda venda = new Venda(null, car, usuario);
-        vendaService.salvarVenda(venda);
-
-        return ResponseEntity.ok(CarrinhoMapper.fromEntity(car));
-    }
+//    @PostMapping
+//    public ResponseEntity<CarrinhoDTO> saveCarrinho(@RequestBody Carrinho carrinho){
+//
+//
+//
+//        Date data = new Date();
+//
+//        carrinho.setData(data);
+//
+//        carrinho.getResumoProdutos().forEach(r -> {
+//            System.out.println("Quantidade antes: "+r.getProduto().getQtdEstoque());
+//            r.getProduto().setQtdEstoque(r.getProduto().getQtdEstoque() - r.getQuantidade());
+//        });
+//
+////        carrinho.getProdutos().forEach(p -> {
+////
+////            p.setQtdEstoque(p.getQtdEstoque()-c.getQuantidade());
+////        });
+//
+//        System.out.println("Carrinho: "+ carrinho);
+//
+////        System.out.println("Email: " +email);
+//
+//        Carrinho car = carrinhoService.salvarCarrinho(carrinho);
+//        Venda venda = new Venda(null, car, usuario);
+//        vendaService.salvarVenda(venda);
+//
+//        return ResponseEntity.ok(CarrinhoMapper.fromEntity(car));
+//    }
 
     @PutMapping
     @PreAuthorize("hasAuthority('ADMIN')")

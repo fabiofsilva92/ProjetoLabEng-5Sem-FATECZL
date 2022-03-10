@@ -14,6 +14,12 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
 
   //Declaração de variáveis
   public compras = new Array();
+  public produtos = new Array();
+  public valorTotal : number = 0;
+  public carrinho = {
+    "produtos": this.produtos,
+    "valorTotal": this.valorTotal
+  }
   public subTotal: number = 0;
   public cep: string = "";
   public erroCEP: boolean = false;
@@ -28,13 +34,13 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
 
   //On Destroy
   ngOnDestroy(): void {
-    localStorage.setItem("compras", JSON.stringify(this.compras));
+    localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(this.compras));
   }
 
   //On init
   ngOnInit(): void {
 
-    this.compras = JSON.parse(localStorage.getItem("compras") + "");
+    this.compras = JSON.parse(localStorage.getItem("resumoCarrinhoProduto") + "");
     this.calcularSubtotal();
     localStorage.setItem("cep", "");
     this.erroPedido = false;
@@ -72,6 +78,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
   aumentarQuantidadeProduto(compra: Compra) {
 
     compra.produto.qtdPretentida += 1;
+    compra.quantidade+=1;
     if (compra.produto.qtdPretentida > compra.produto.qtdEstoque) compra.produto.qtdPretentida = compra.produto.qtdEstoque;
     compra.valorTotal = compra.produto.qtdPretentida * parseFloat(compra.produto.precoUnitario);
     compra.quantidade = compra.produto.qtdPretentida;
@@ -80,6 +87,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
 
   diminuirQuantidadeProduto(compra: Compra) {
     compra.produto.qtdPretentida -= 1;
+    compra.quantidade -=1;
     if (compra.produto.qtdPretentida == 0) compra.produto.qtdPretentida = 1;
     compra.valorTotal = compra.produto.qtdPretentida * parseFloat(compra.produto.precoUnitario);
     compra.quantidade = compra.produto.qtdPretentida;
@@ -89,7 +97,9 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
   calcularSubtotal() {
     this.subTotal = 0;
     this.compras.forEach(element => {
-      this.subTotal += element.valorTotal;
+     
+      this.subTotal = this.subTotal +  (parseFloat(element.quantidade) * parseFloat(element.produto.precoUnitario));
+      console.log("Valor do subtotal" + this.subTotal)
     })
   }
 
@@ -102,7 +112,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
 
       this.compras = listaDeCompraSemProdutoEspecificado;
 
-      localStorage.setItem("compras", JSON.stringify(listaDeCompraSemProdutoEspecificado))
+      localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(listaDeCompraSemProdutoEspecificado))
 
       console.log(listaDeCompraSemProdutoEspecificado)
     }
@@ -126,7 +136,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
 
     if (result) {
       this.compras = new Array();
-      localStorage.setItem("compras", JSON.stringify(this.compras));
+      localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(this.compras));
       this.subTotal = 0;
     }
   }
@@ -147,6 +157,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
         if (data) {
           this.pedidoRealizado = true;
           this.loadingPedido = false;
+          console.log("O que retornou do checkout: " + JSON.stringify(data))
         }
       },
       error: (err) => {
@@ -158,7 +169,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
       }
     });
     this.compras = new Array();
-    localStorage.setItem("compras", JSON.stringify(this.compras))
+    localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(this.compras))
   }
 
   paginaDeProdutos() {

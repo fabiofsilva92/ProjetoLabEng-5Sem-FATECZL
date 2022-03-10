@@ -1,7 +1,5 @@
 package gft.desafio.desafioangularbackend.entities;
 
-import gft.desafio.desafioangularbackend.entities.autenticacao.Usuario;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -23,18 +21,20 @@ public class Carrinho {
     )
     private List<Produto> produtos;
 
+    @Transient
+    private List<ResumoProdutoCarrinho> resumoProdutos;
+
     private Double valorTotal;
-    private String cep;
+
 
     public Carrinho() {
     }
 
-    public Carrinho(Long id, Date data, List<Produto> produtos, Double valortotal, String cep) {
+    public Carrinho(Long id, Date data, List<Produto> produtos, Double valortotal) {
         this.id = id;
         this.data = data;
         this.produtos = produtos;
         this.valorTotal = valortotal;
-        this.cep = cep;
     }
 
     public Long getId() {
@@ -69,12 +69,12 @@ public class Carrinho {
         this.valorTotal = valorTotal;
     }
 
-    public String getCep() {
-        return cep;
+    public List<ResumoProdutoCarrinho> getResumoProdutos() {
+        return resumoProdutos;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setResumoProdutos(List<ResumoProdutoCarrinho> resumoProdutos) {
+        this.resumoProdutos = resumoProdutos;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class Carrinho {
                 ", data=" + data +
                 ", produtos=" + produtos +
                 ", valorTotal=" + valorTotal +
-                ", cep='" + cep + '\'' +
+                 '\'' +
                 '}';
     }
 }

@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="Custom-prices">
-                    <div class="Custom-amount">{{compra.valorTotal |currency:'BRL':'symbol':'1.2-2':'pt'}}</div>
+                    <div class="Custom-amount">{{(compra.quantidade * compra.produto.precoUnitario) |currency:'BRL':'symbol':'1.2-2':'pt'}}</div>
                     <!-- <div class="Custom-save"><u>Save for later</u></div> -->
                     <div class="Custom-remove" (click)="excluirDoCarrinho(compra.produto.id)"><u>Excluir do Carrinho</u>
                     </div>

@@ -5,6 +5,7 @@ import { Produto } from 'src/app/model/produto';
 import { ProdutoService } from 'src/app/services/produto.service';
 import { browserRefresh } from 'src/app/app.component';
 import { CompraService } from 'src/app/services/compra.service';
+import { CarrinhoService } from 'src/app/services/carrinho.service';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -14,7 +15,7 @@ import { CompraService } from 'src/app/services/compra.service';
 export class ListaProdutosComponent implements OnInit {
 
   //Construtor
-  constructor(private produtoService: ProdutoService, private loginService: LoginServiceService, private compraService: CompraService) { }
+  constructor(private produtoService: ProdutoService, private loginService: LoginServiceService, private compraService: CompraService, private carrinhoService: CarrinhoService) { }
 
   //Declaração de variaveis
   public produtos !: Produto[];
@@ -64,7 +65,7 @@ export class ListaProdutosComponent implements OnInit {
   }
 
   adicionarAoCarrinho(produto: Produto) {
-    this.compraService.addCompra(produto);
+    this.carrinhoService.adicionarAoCarrinho(produto);
     produto.isAdicionado = true;
 
   }

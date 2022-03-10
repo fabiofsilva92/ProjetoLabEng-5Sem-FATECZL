@@ -40,7 +40,7 @@ export class LoginServiceService {
           localStorage.setItem("token", token);
           localStorage.setItem("usuario", JSON.stringify(usuario.login));
           localStorage.setItem("isLogged", "true");
-          localStorage.setItem("compras", JSON.stringify(new Array))
+          localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(new Array))
           localStorage.setItem("cep", ""),
           localStorage.removeItem("sessao");
           this.currentUserSubject.next(usuario.login)
@@ -78,7 +78,7 @@ export class LoginServiceService {
     localStorage.removeItem('usuario');
     localStorage.removeItem('token');
     localStorage.removeItem('isLogged')
-    localStorage.removeItem('compras')
+    localStorage.removeItem('resumoCarrinhoProduto')
     localStorage.removeItem('role')
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
