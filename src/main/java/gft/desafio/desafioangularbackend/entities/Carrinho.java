@@ -21,7 +21,12 @@ public class Carrinho {
     )
     private List<Produto> produtos;
 
-    @Transient
+    @OneToMany
+    @JoinTable(
+            name = "tb_carrinho_resumo",
+            joinColumns = @JoinColumn(name = "carrinho_id"),
+            inverseJoinColumns = @JoinColumn(name = "resumo_produto_id")
+    )
     private List<ResumoProdutoCarrinho> resumoProdutos;
 
     private Double valorTotal;

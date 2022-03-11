@@ -26,10 +26,10 @@ public class VendaController {
         this.carrinhoService = carrinhoService;
     }
 
-    @GetMapping("{email}")
-    public ResponseEntity<List<Venda>> getVendas(@PathVariable String email){
+    @GetMapping()
+    public ResponseEntity<List<Venda>> getVendasDoUsuarioLogado(){
 
-        Usuario usuario = usuarioService.buscarPorEmail(email);
+        Usuario usuario = usuarioService.retornaUsuarioRequisitante();
 
         List<Venda> vendas = vendaService.buscarVendasPorUsuario(usuario.getId());
 

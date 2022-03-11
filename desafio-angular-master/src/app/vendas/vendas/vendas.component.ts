@@ -14,11 +14,7 @@ export class VendasComponent implements OnInit {
 
   ngOnInit(): void {
 
-    var usuario = localStorage.getItem("usuario")?.split("\"")[1];
-    
-    console.log(usuario)
-
-    this.vendaService.buscarVendasUsuario(usuario? usuario : "").subscribe({
+    this.vendaService.buscarVendasUsuario().subscribe({
       next: (data) => {
         if(data){
           this.vendas = data

@@ -5,6 +5,7 @@ import gft.desafio.desafioangularbackend.entities.*;
 import gft.desafio.desafioangularbackend.entities.autenticacao.Usuario;
 import gft.desafio.desafioangularbackend.services.CarrinhoService;
 import gft.desafio.desafioangularbackend.services.CompraService;
+import gft.desafio.desafioangularbackend.services.ResumoProdutoCarrinhoService;
 import gft.desafio.desafioangularbackend.services.VendaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,10 +26,13 @@ public class CompraController {
 
     private final CompraService compraService;
 
-    public CompraController(CarrinhoService carrinhoService, VendaService vendaService, CompraService compraService) {
+    private final ResumoProdutoCarrinhoService resumoProdutoCarrinhoService;
+
+    public CompraController(CarrinhoService carrinhoService, VendaService vendaService, CompraService compraService, ResumoProdutoCarrinhoService resumoProdutoCarrinhoService) {
         this.carrinhoService = carrinhoService;
         this.vendaService = vendaService;
         this.compraService = compraService;
+        this.resumoProdutoCarrinhoService = resumoProdutoCarrinhoService;
     }
 
     //    @PostMapping
@@ -60,7 +64,10 @@ public class CompraController {
             System.out.println("Produto estoque atualizado: " + r.getProduto());
             //TODO Atualizar produto
             produtos.add(r.getProduto());
+            resumoProdutoCarrinhoService.saveResumo(r);
         }
+
+        
 
         System.out.println("Valor total do carrinho: " + carrinho.getValorTotal());
 

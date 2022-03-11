@@ -10,9 +10,9 @@ export class VendasService {
 
   constructor(private http: HttpClient) { }
 
-  buscarVendasUsuario(email : string) {
+  buscarVendasUsuario() {
     
-    return this.http.get(AppConstants.baseServidor+"venda/"+email).pipe(
+    return this.http.get(AppConstants.baseServidor+"venda/").pipe(
       data => {
         return data;
       }

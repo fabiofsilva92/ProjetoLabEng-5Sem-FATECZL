@@ -5,6 +5,7 @@ import gft.desafio.desafioangularbackend.entities.autenticacao.UsuarioCustomUser
 import gft.desafio.desafioangularbackend.exceptions.UsuarioNaoEncontradoException;
 import gft.desafio.desafioangularbackend.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,6 +37,12 @@ public class UsuarioService implements UserDetailsService {
         }
 
         throw new UsuarioNaoEncontradoException("Usuário já existente com esse email!!");
+    }
+
+    public Usuario retornaUsuarioRequisitante(){
+        Usuario usuario = (Usuario) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        return usuario;
     }
 
     public Usuario buscarPorCPFInv(String cpf){

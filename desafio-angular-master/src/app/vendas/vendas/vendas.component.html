@@ -14,20 +14,20 @@
                 </div> -->
                 <div class="Custom-about">
                     <span class="Custom-title">Pedido: {{venda.id}}</span>
-                    <div *ngFor="let compra of venda.carrinho.compras">
+                    <div *ngFor="let resumo of venda.compra.carrinho.resumoProdutos">
                         <div  class="CustomCart-Items" >
                             <div class="Custom-image-box">
-                                <img src="{{compra.produto.foto}}" style="height: 120px;" />
+                                <img src="{{resumo.produto.foto}}" style="height: 120px;" />
                             </div>
                             <div class="Custom-about ms-3">
-                                <span class="Custom-title">{{compra.produto.descricao}}</span>
+                                <span class="Custom-title">{{resumo.produto.descricao}}</span>
                             </div>
                             <div class="Custom-about ms-3">
-                                <span class="Custom-title"> Qtd: {{compra.quantidade}}</span>
+                                <span class="Custom-title"> Qtd: {{resumo.quantidade}}</span>
                             </div>
     
                             <div class="Custom-prices">
-                                <div class="Custom-amount ms-4">Valor Total: <br> {{compra.valorTotal |currency:'BRL':'symbol':'1.2-2':'pt'}}</div>                    
+                                <div class="Custom-amount ms-4">Valor Total: <br> {{(resumo.quantidade * resumo.produto.precoUnitario) |currency:'BRL':'symbol':'1.2-2':'pt'}}</div>                    
                             </div>
                         </div>
                     </div>

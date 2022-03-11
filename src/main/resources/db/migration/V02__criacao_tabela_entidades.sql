@@ -36,3 +36,11 @@ FOREIGN KEY (compra_id) REFERENCES tb_compra(id)
 );
 
 
+CREATE TABLE tb_resumo_produto_carrinho(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    quantidade INT,
+    produto_id BIGINT,
+    FOREIGN KEY (produto_id) REFERENCES tb_produto(id)
+);
+
+
