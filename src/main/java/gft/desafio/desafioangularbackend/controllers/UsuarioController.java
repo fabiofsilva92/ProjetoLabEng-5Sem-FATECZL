@@ -1,5 +1,6 @@
 package gft.desafio.desafioangularbackend.controllers;
 
+import gft.desafio.desafioangularbackend.entities.Endereco;
 import gft.desafio.desafioangularbackend.entities.autenticacao.Role;
 import gft.desafio.desafioangularbackend.entities.autenticacao.Usuario;
 import gft.desafio.desafioangularbackend.services.RoleService;
@@ -10,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("v1/cadastro-usuario")
@@ -38,6 +42,12 @@ public class UsuarioController {
         }
          return ResponseEntity.badRequest().build();
     }*/
+
+    @GetMapping
+    public ResponseEntity<Usuario> retornarUsuario(){
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(usuario);
+    }
 
     @PostMapping
     public ResponseEntity<Usuario> saveUsuario(@RequestBody Usuario usuario){
