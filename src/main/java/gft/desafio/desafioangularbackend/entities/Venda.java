@@ -1,6 +1,7 @@
 package gft.desafio.desafioangularbackend.entities;
 
 import gft.desafio.desafioangularbackend.entities.autenticacao.Usuario;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -9,8 +10,9 @@ import javax.persistence.*;
 public class Venda {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String strId;
 
     @OneToOne
     private Compra compra;
@@ -26,8 +28,8 @@ public class Venda {
         this.usuario = usuario;
     }
 
-    public Venda(Long id, Compra compra, Usuario usuario) {
-        this.id = id;
+    public Venda(String strId, Compra compra, Usuario usuario) {
+        this.strId = strId;
         this.compra = compra;
         this.usuario = usuario;
     }
@@ -35,17 +37,17 @@ public class Venda {
     public Venda() {
     }
 
-    public Venda(Long id, Compra compra) {
-        this.id = id;
+    public Venda(String strId, Compra compra) {
+        this.strId = strId;
         this.compra = compra;
     }
 
-    public Long getId() {
-        return id;
+    public String getStrId() {
+        return strId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setStrId(String id) {
+        this.strId = id;
     }
 
     public Compra getCompra() {

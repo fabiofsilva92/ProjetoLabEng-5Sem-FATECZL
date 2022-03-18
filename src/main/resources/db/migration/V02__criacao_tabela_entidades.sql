@@ -28,7 +28,7 @@ CREATE TABLE tb_compra(
 );
 
 CREATE TABLE tb_venda(
-id BIGINT AUTO_INCREMENT PRIMARY KEY,
+str_id VARCHAR (255) NOT NULL PRIMARY KEY,
 compra_id BIGINT,
 usuario_id BIGINT ,
 FOREIGN KEY (usuario_id) REFERENCES tb_usuario(id),

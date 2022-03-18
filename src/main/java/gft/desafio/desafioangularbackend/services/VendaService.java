@@ -18,6 +18,7 @@ public class VendaService {
     }
 
     public Venda salvarVenda(Venda venda){
+//        venda.setId(UUID.randomUUID().toString());
         return vendaRepository.save(venda);
     }
 
@@ -25,18 +26,18 @@ public class VendaService {
         return vendaRepository.findAll();
     }
 
-    public Venda buscarVenda(Long id){
+    public Venda buscarVenda(String id){
         Optional<Venda> byId = vendaRepository.findById(id);
         return byId.orElseThrow(() -> new RuntimeException("Venda não encontrada"));
     }
 
-    public Venda atualizarVenda(Venda venda, Long id){
+    public Venda atualizarVenda(Venda venda, String id){
         Venda original = buscarVenda(id);
-        venda.setId(original.getId());
+        venda.setStrId(original.getStrId());
         return salvarVenda(venda);
     }
 
-    public void excluirVenda(Long id){
+    public void excluirVenda(String id){
         Venda venda = buscarVenda(id);
         vendaRepository.delete(venda);
     }

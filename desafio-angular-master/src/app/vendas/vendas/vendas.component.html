@@ -13,7 +13,7 @@
                     <img src="{{compra.produto.foto}}" style="height: 120px;" />
                 </div> -->
                 <div class="Custom-about">
-                    <span class="Custom-title">Pedido: {{venda.id}}</span>
+                    <span class="Custom-title">Pedido: {{venda.strId}}</span>
                     <div *ngFor="let resumo of venda.compra.carrinho.resumoProdutos">
                         <div  class="CustomCart-Items" >
                             <div class="Custom-image-box">
