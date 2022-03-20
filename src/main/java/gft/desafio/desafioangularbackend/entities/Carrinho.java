@@ -13,7 +13,7 @@ public class Carrinho {
     private Long id;
     private Date data;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "tb_carrinho_produtos",
             joinColumns = @JoinColumn(name = "carrinho_id"),

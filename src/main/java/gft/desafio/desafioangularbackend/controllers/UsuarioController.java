@@ -1,5 +1,6 @@
 package gft.desafio.desafioangularbackend.controllers;
 
+import gft.desafio.desafioangularbackend.dto.RegistroUsuarioDTO;
 import gft.desafio.desafioangularbackend.entities.Endereco;
 import gft.desafio.desafioangularbackend.entities.autenticacao.Role;
 import gft.desafio.desafioangularbackend.entities.autenticacao.Usuario;
@@ -57,5 +58,21 @@ public class UsuarioController {
         usuarioService.buscarPorCPFInv(usuario.getCpf());
 
         return ResponseEntity.ok(usuarioService.salvarUsuario(usuario));
+    }
+
+    @PutMapping("{id}") //TODO arrumar update de usuario, esta recebendo endereço nulo e role nula
+    public ResponseEntity<Usuario> updateUsuario(@RequestBody RegistroUsuarioDTO usuario, @PathVariable Long id){
+
+        System.out.println("Usuario que chegou: "+usuario);
+
+        Role role = roleService.buscarRolePorId(usuario.getRoleID());
+
+        Usuario usuarioUpdate = new Usuario(usuario.getId(), usuario.getNome(), usuario.getEmail(),
+                usuario.getCpf(), usuario.getSenha(),
+                new Endereco(usuario.getCep(), usuario.getRua(), usuario.getNumero(), usuario.getBairro(), usuario.getCidade()),
+                role, usuario.getIs_Active());
+
+//        return ResponseEntity.ok(usuarioUpdate);
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(usuarioUpdate, usuario.getId()));
     }
 }

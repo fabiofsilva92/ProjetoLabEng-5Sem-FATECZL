@@ -1,1 +1,130 @@
-<p>gerenciamento-usuario works!</p>
+<div class="div-body">
+
+    <div class="Cart-Container mt-4">
+        <form [formGroup]="cadastroUsuarioForm" class="ms-3" *ngIf="!cadastrado && !isAlterandoSenha && !alertAtualizado">
+            <h3 class="mt-3">Gerenciar usuario</h3>
+            <div class="form-row">
+                <div class="form-group col-md-6 mt-2">
+                    <label for="">Nome</label>
+                    <input formControlName="nome" type="text" class="form-control" placeholder="Nome completo">
+                </div>
+                <div class="form-group mt-2 col-md-6">
+                    <label for="">CPF (somente CPFs válidos)</label>
+                    <input formControlName="cpf" type="text" class="form-control" placeholder="Insira o CPF" mask="CPF_CNPJ" (blur)="verificaCPF()">
+                    <div class="alert alert-danger" style="width: 350px;" *ngIf="erroCPF">
+                        <strong>Erro!</strong> Favor preencher o CPF corretamente.
+                    </div>
+                </div>
+                <div class="form-group mt-2 col-md-6">
+                    <label for="">CEP (somente CEPs válidos)</label>
+                    <input formControlName="cep" type="text" class="form-control" placeholder="Insira o CEP de sua rua" (blur)="verificaCEP()">
+                    <div class="alert alert-danger" style="width: 350px;" *ngIf="erroCEP">
+                        <strong>Erro!</strong> Favor preencher o CEP corretamente.
+                    </div>
+                </div>
+
+
+                <div class="form-group mt-2 col-md-6" *ngIf="objetoCEP != '' && erroCEP == false">
+
+                    <div class="Custom-card ">
+                        <div class="spinner-border" *ngIf="!objetoCEP.street" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+
+                        <div class="form-group mt-2 ">
+                            <label for="">Rua </label>
+                            <input formControlName="rua" type="text" class="form-control" readonly>
+                        </div>
+
+
+                        <div class="form-group mt-2">
+                            <label for="">Numero </label>
+                            <input formControlName="numero" type="text" class="form-control">
+                        </div>
+
+
+                        <div class="form-group mt-2">
+                            <label for="">Bairro </label>
+                            <input formControlName="bairro" type="text" class="form-control" readonly>
+                        </div>
+
+
+                        <div class="form-group mt-2">
+                            <label for="">Cidade </label>
+                            <input formControlName="cidade" type="text" class="form-control" readonly>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6 mt-2">
+                    <label for="inputEmail3">Email</label>
+                    <input type="email" formControlName="email" id="inputEmail3" class="form-control" placeholder="Insira o Email">
+                    <div class="alert alert-danger" style="width: 350px;" *ngIf="erroEmail">
+                        <strong>Erro!</strong> Favor preencher o Email corretamente.
+                    </div>
+                </div>
+                
+            </div>
+            <div class="d-flex justify-content-start">
+                <button type="submit" class="btn btn-primary mt-3 mb-3" (click)="atualizarCadastro()">Atualizar</button>
+
+                <button type="submit" class="btn btn-secondary mt-3 mb-3 ms-5" (click)="alterarSenha()">Alterar Senha</button>
+
+                <button type="submit" class="btn btn-danger mt-3 mb-3 ms-5" [routerLink]="['/login']">Cancelar</button>
+
+            </div>
+
+
+        </form >
+
+        <div class="" *ngIf="alertAtualizado">
+            <div class="d-flex justify-content-center"> Usuario atualizado com sucesso</div>
+            <div class="d-flex justify-content-center"><button class="btn btn-primary mt-2" [routerLink]="['/produtos']">Ver Produtos</button></div>
+            
+        </div>
+
+        <form *ngIf="isAlterandoSenha" [formGroup]="cadastroSenhaForm" class="ms-3" >
+            <h3 class="mt-3">Gerenciar usuario</h3>
+            <div class="form-row">
+                <div class="form-group col-md-6 mt-2">
+                    <label for="">Senha atual</label>
+                    <input formControlName="senhaAntiga" type="password" class="form-control" placeholder="Senha atual" (blur)="verificaBCrypt()">
+                </div>
+                <div class="form-group col-md-6 mt-2">
+                    <label for="">Nova Senha</label>
+                    <input id="password" (keyup)="verificaForcaSenha();" formControlName="novaSenha" type="password" class="form-control" placeholder="Insira a Senha">
+                    <span style='color:red' *ngIf="erroSenhaFraca">Fraco, insira no mínimo 6 caracteres</span>
+                    <span style='color:green' *ngIf="alertSenhaForte"><b>Forte</b></span>
+                    <span style='color:orange' *ngIf="erroCaracterEspecial">Médio, insira um caracter especial</span>
+                </div>
+                <div class="form-group col-md-6 mt-2">
+                    <label for="">Repita a nova senha</label>
+                    <input id="password" (blur)="verificaIgualdadeSenha();" formControlName="novaSenhaRepetida" type="password" class="form-control" placeholder="Repita a Senha">
+                    <span style='color:red' *ngIf="erroRepitaSenha">Senhas não correspondem</span>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-start">
+                <button type="submit" class="btn btn-primary mt-3 mb-3" (click)="atualizarSenha()">Atualizar Senha</button>
+                <button type="submit" class="btn btn-danger mt-3 mb-3 ms-5" [routerLink]="['/login']">Cancelar</button>
+            </div>
+        </form>
+
+        <div *ngIf="cadastrado" class="d-flex justify-content-center">
+            <div style="color: green;">
+                <h2 class="d-flex justify-content-center">Cadastrado
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                        <path
+                            d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z" />
+                    </svg>
+                </h2> <br>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="button" class="btn btn-secondary ms-5" style="background-color: white ; color: black !important;" [routerLink]="['/login']">Ir para
+                        pagina de Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

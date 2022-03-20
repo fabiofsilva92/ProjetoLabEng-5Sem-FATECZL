@@ -2,21 +2,22 @@
     <div class="Cart-Container">
         <div class="CustomHeader">
             <h3 ngClass="CustomHeading mt-5 mb-5">Pedidos</h3>
-            
+
         </div>
         <div class="ms-5 mb-5" *ngIf="vendas.length == 0">
             <h4>Nenhum pedido registrado.</h4>
         </div>
         <div *ngFor="let venda of vendas">
-            <div class="CustomCart-Items">
+            <div class="ms-3">
                 <!-- <div class="Custom-image-box">
                     <img src="{{compra.produto.foto}}" style="height: 120px;" />
                 </div> -->
                 <div class="Custom-about">
-                    <span class="Custom-title">Pedido: {{venda.strId}}</span>
+                    <span class="Custom-title mb-">Pedido: {{venda.strId}}</span>
+
                     <div *ngFor="let resumo of venda.compra.carrinho.resumoProdutos">
-                        <div  class="CustomCart-Items" >
-                            <div class="Custom-image-box">
+                        <div class="CustomCart-Items">
+                            <div class="Custom-image-box mt-3">
                                 <img src="{{resumo.produto.foto}}" style="height: 120px;" />
                             </div>
                             <div class="Custom-about ms-3">
@@ -25,15 +26,20 @@
                             <div class="Custom-about ms-3">
                                 <span class="Custom-title"> Qtd: {{resumo.quantidade}}</span>
                             </div>
-    
                             <div class="Custom-prices">
-                                <div class="Custom-amount ms-4">Valor Total: <br> {{(resumo.quantidade * resumo.produto.precoUnitario) |currency:'BRL':'symbol':'1.2-2':'pt'}}</div>                    
+                                <div class="Custom-amount ms-4"> {{resumo.produto.precoUnitario * resumo.quantidade |currency:'BRL':'symbol':'1.2-2':'pt'}}</div>
                             </div>
+                            
                         </div>
                     </div>
-                    <hr class="mb-4">
+                    <div class="CustomCart-Items2">
+                        <div class="Custom-prices">
+                            <div class="Custom-amount ms-4">Valor Total: <br> {{venda.compra.valorTotal |currency:'BRL':'symbol':'1.2-2':'pt'}}</div>
+                        </div>
+                    </div>
+                    
+                    <hr class="ms-5 mb-4 custom-width">
                 </div>
             </div>
         </div>
     </div>
-</div>

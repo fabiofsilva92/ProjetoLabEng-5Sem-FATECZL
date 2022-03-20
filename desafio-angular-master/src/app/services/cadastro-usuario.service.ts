@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConstants } from '../app-constants';
 
@@ -35,4 +35,20 @@ export class CadastroUsuarioService {
       }
     )
   }
+
+  atualizarUsuario(usuario:any){
+
+    let params = new HttpParams().set('id', usuario.id);
+
+    console.log("Iniciando atualizarUsuario: ", usuario)
+
+    return this.http.put(AppConstants.baseServidor+"cadastro-usuario/"+usuario.id, JSON.parse(JSON.stringify(usuario))).pipe(
+      data => {
+        console.log(data);
+        return data;
+      }
+    )
+  }
+
+  
 }

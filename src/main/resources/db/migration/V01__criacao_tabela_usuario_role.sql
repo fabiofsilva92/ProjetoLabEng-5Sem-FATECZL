@@ -14,6 +14,7 @@ cep VARCHAR(255),
 cidade VARCHAR(255),
 numero INTEGER ,
 rua VARCHAR(255),
+is_Active BOOLEAN,
 role_id BIGINT,
 FOREIGN KEY (role_id) REFERENCES tb_role(id)
 );
@@ -25,7 +26,7 @@ values
 ('USUARIO');
 
 INSERT INTO tb_usuario
-(nome, email, cpf, senha, role_id)
+(nome, email, cpf, senha, bairro, cep, cidade, numero, rua,  role_id)
 values
-('ADMINISTRADOR DO SISTEMA','admin@gmail.com', '875.804.650-00', '$2a$12$QWqpbKZ4030NyWav.zhWFOSkjptsr5.RyIqiCCyDJOKIwudBZiitO', '1'),
-('Usuario DO SISTEMA','usuario@gmail.com', '322.292.820-77','$2a$12$QWqpbKZ4030NyWav.zhWFOSkjptsr5.RyIqiCCyDJOKIwudBZiitO', '2');
+('ADMINISTRADOR DO SISTEMA','admin@gmail.com', '875.804.650-00', '$2a$12$QWqpbKZ4030NyWav.zhWFOSkjptsr5.RyIqiCCyDJOKIwudBZiitO', 'Parque Paulistano', '08080000', 'São Paulo', 841, 1, '1'),
+('Usuario DO SISTEMA','usuario@gmail.com', '322.292.820-77', '$2a$12$QWqpbKZ4030NyWav.zhWFOSkjptsr5.RyIqiCCyDJOKIwudBZiitO', 'Parque Paulistano', '08080000', 'São Paulo', 841, 1,'2');

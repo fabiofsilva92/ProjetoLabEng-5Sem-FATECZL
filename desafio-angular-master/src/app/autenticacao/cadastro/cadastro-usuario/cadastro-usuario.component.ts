@@ -92,6 +92,10 @@ export class CadastroUsuarioComponent implements OnInit {
     })
   }
 
+  
+
+
+
   //Verifica o CPF toda vez que o campo perde o foco
   verificaCPF() {
     this.erroCPF = false;

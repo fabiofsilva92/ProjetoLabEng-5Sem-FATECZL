@@ -29,17 +29,35 @@ public class Usuario {
     @ManyToOne
     private Role role;
 
+    private Boolean isActive;
+
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String cpf, String senha, Endereco endereco, Role role) {
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", senha='" + senha + '\'' +
+                ", endereco=" + endereco +
+                ", role=" + role +
+                ", isActive=" + isActive +
+                '}';
+    }
+
+    public Usuario(Long id, String nome, String email, String cpf, String senha, Endereco endereco, Role role, Boolean isActive) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;
+
         this.endereco = endereco;
         this.role = role;
+        this.isActive = isActive;
     }
 
     public Long getId() {
@@ -86,8 +104,8 @@ public class Usuario {
         return endereco;
     }
 
-    public void setEndereco(Endereco enderecos) {
-        this.endereco = enderecos;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public Role getRole() {
@@ -96,5 +114,13 @@ public class Usuario {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }
