@@ -6,7 +6,7 @@ import gft.desafio.desafioangularbackend.entities.autenticacao.Usuario;
 public class UsuarioMapper {
 
     public static UsuarioDTO fromEntity(Usuario usuario){
-        return new UsuarioDTO(usuario.getNome(), usuario.getEmail());
+        return new UsuarioDTO(usuario.getNome(), usuario.getEmail(), usuario.getCpf(), usuario.getEndereco());
     }
 
 }

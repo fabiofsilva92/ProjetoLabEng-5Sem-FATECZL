@@ -67,7 +67,7 @@ public class CompraController {
             resumoProdutoCarrinhoService.saveResumo(r);
         }
 
-        
+
 
         System.out.println("Valor total do carrinho: " + carrinho.getValorTotal());
 

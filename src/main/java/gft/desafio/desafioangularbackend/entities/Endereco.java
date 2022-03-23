@@ -36,6 +36,8 @@ public class Endereco {
         this.cidade = cidade;
     }
 
+
+
     public String getCep() {
         return cep;
     }
