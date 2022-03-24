@@ -31,6 +31,7 @@ CREATE TABLE tb_venda(
 str_id VARCHAR (255) NOT NULL PRIMARY KEY,
 compra_id BIGINT,
 usuario_id BIGINT ,
+status VARCHAR(40),
 FOREIGN KEY (usuario_id) REFERENCES tb_usuario(id),
 FOREIGN KEY (compra_id) REFERENCES tb_compra(id)
 );

@@ -4,6 +4,7 @@ import { Compra } from 'src/app/model/compra';
 import { Produto } from 'src/app/model/produto';
 import { CarrinhoService } from 'src/app/services/carrinho.service';
 import { CompraService } from 'src/app/services/compra.service';
+import { VendasService } from 'src/app/services/vendas.service';
 
 @Component({
   selector: 'app-carrinho',
@@ -30,7 +31,8 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
   public loadingPedido: boolean = false;
 
   //Construtor
-  constructor(private compraService: CompraService, private carrinhoService: CarrinhoService, private router: Router) { }
+  constructor(private compraService: CompraService, private carrinhoService: CarrinhoService,
+    private vendaService: VendasService, private router: Router) { }
 
   //On Destroy
   ngOnDestroy(): void {
@@ -158,6 +160,8 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
           this.pedidoRealizado = true;
           this.loadingPedido = false;
           console.log("O que retornou do checkout: " + JSON.stringify(data))
+          this.finalizarVenda(data);
+
         }
       },
       error: (err) => {
@@ -170,6 +174,17 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
     });
     this.compras = new Array();
     localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(this.compras))
+  }
+
+  finalizarVenda(compra: any){
+    this.vendaService.salvarVenda(compra).subscribe({
+      next: (data) => {
+        console.log("Venda finalizada: ",data)
+      },
+      error: (err) => {
+        console.log("Deu erro ao finalizar venda: ", err)
+      }
+    })
   }
 
   paginaDeProdutos() {

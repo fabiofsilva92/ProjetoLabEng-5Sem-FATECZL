@@ -65,7 +65,7 @@
                         <strong>Erro!</strong> Favor preencher o Email corretamente.
                     </div>
                 </div>
-                
+
             </div>
             <div class="d-flex justify-content-start">
                 <button type="submit" class="btn btn-primary mt-3 mb-3" (click)="atualizarCadastro()">Atualizar</button>
@@ -77,20 +77,21 @@
             </div>
 
 
-        </form >
+        </form>
 
         <div class="" *ngIf="alertAtualizado">
             <div class="d-flex justify-content-center"> Usuario atualizado com sucesso</div>
             <div class="d-flex justify-content-center"><button class="btn btn-primary mt-2" [routerLink]="['/produtos']">Ver Produtos</button></div>
-            
+
         </div>
 
-        <form *ngIf="isAlterandoSenha" [formGroup]="cadastroSenhaForm" class="ms-3" >
+        <form *ngIf="isAlterandoSenha" [formGroup]="cadastroSenhaForm" class="ms-3">
             <h3 class="mt-3">Gerenciar usuario</h3>
             <div class="form-row">
                 <div class="form-group col-md-6 mt-2">
                     <label for="">Senha atual</label>
                     <input formControlName="senhaAntiga" type="password" class="form-control" placeholder="Senha atual" (blur)="verificaBCrypt()">
+                    <span style='color:red' *ngIf="erroSenhaNaoConfere">Senhas atual incorreta</span>
                 </div>
                 <div class="form-group col-md-6 mt-2">
                     <label for="">Nova Senha</label>

@@ -79,9 +79,9 @@ public class CompraController {
         Compra compra = compraService.salvarCompra(new Compra(null, car, car.getValorTotal()));
 
 
-        Venda venda = new Venda(null, compra, usuario);
+//        Venda venda = new Venda(null, compra, usuario);
 //
-        vendaService.salvarVenda(venda);
+//        vendaService.salvarVenda(venda);
 
         return ResponseEntity.ok(compra);
     }

@@ -19,4 +19,21 @@ export class VendasService {
     )
 
   }
+
+  salvarVenda(compra: any){
+
+    var venda = {
+      "compra": compra,
+      "status": "PAGAMENTO_APROVADO"
+    }
+
+    console.log("Json enviado ",JSON.parse(JSON.stringify(venda)));
+
+    return this.http.post(AppConstants.baseServidor+"venda", JSON.parse(JSON.stringify(venda))).pipe(
+      data =>{
+        return data;
+      }
+    )
+
+  }
 }

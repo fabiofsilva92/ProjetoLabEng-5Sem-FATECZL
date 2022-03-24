@@ -31,6 +31,7 @@ export class GerenciamentoUsuarioComponent implements OnInit {
 
   public erroCEP: boolean = false;
   public objetoCEP: any = '';
+  erroSenhaNaoConfere: boolean = false;
 
   constructor(private gerenciamentoUserService: GerenciamentoUsuarioService, private formBuilder: FormBuilder,
               private carrinhoService: CarrinhoService, private cadastroUsuarioService: CadastroUsuarioService) { }
@@ -162,9 +163,11 @@ export class GerenciamentoUsuarioComponent implements OnInit {
    }
 
   atualizarSenha(){
-    if(this.alertSenhaForte && !this.erroRepitaSenha && this.verificaBCrypt){
+    var isSenhaCorreta = this.verificaBCrypt();
+    if(this.alertSenhaForte && !this.erroRepitaSenha && isSenhaCorreta){
       var novaSenha = bcrypt.hashSync(this.s['novaSenha'].value, 10);
       console.log("OLHA A NOVA SENHA: ",novaSenha)
+      this.erroSenhaNaoConfere = false;
       this.usuario.senha = novaSenha;
       this.cadastroUsuarioService.atualizarUsuario(this.usuario).subscribe({
         next: (data) =>{
@@ -176,6 +179,9 @@ export class GerenciamentoUsuarioComponent implements OnInit {
           console.log("Deu erro ao atualizar senha: ", err)
         }
       });
+    }
+    else{
+      this.erroSenhaNaoConfere = true;
     }
   }
 
