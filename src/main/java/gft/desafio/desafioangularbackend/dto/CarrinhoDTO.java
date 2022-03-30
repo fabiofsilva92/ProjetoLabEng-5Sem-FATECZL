@@ -9,13 +9,13 @@ public class CarrinhoDTO {
 
     private Long id;
     private Date data;
-    private List<Produto> produtos;
+//    private List<Produto> produtos;
     private Double valorTotal;
 
-    public CarrinhoDTO(Long id, Date data, List<Produto> produtos, Double valorTotal) {
+    public CarrinhoDTO(Long id, Date data /*,List<Produto> produtos*/, Double valorTotal) {
         this.id = id;
         this.data = data;
-        this.produtos = produtos;
+//        this.produtos = produtos;
         this.valorTotal = valorTotal;
     }
 
@@ -35,13 +35,13 @@ public class CarrinhoDTO {
         this.data = data;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
+//    public List<Produto> getProdutos() {
+//        return produtos;
+//    }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
+//    public void setProdutos(List<Produto> produtos) {
+//        this.produtos = produtos;
+//    }
 
     public Double getValorTotal() {
         return valorTotal;

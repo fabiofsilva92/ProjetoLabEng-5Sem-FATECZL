@@ -13,19 +13,18 @@ public class Carrinho {
     private Long id;
     private Date data;
 
-    @ManyToMany
+   /* @ManyToMany
     @JoinTable(
             name = "tb_carrinho_produtos",
             joinColumns = @JoinColumn(name = "carrinho_id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id")
     )
-    private List<Produto> produtos;
+    private List<Produto> produtos;*/
 
     @OneToMany
     @JoinTable(
-            name = "tb_carrinho_resumo",
-            joinColumns = @JoinColumn(name = "carrinho_id"),
-            inverseJoinColumns = @JoinColumn(name = "resumo_produto_id")
+            name = "tb_carrinho_resumo_produtos",
+            joinColumns = @JoinColumn(name = "carrinho_id")
     )
     private List<ResumoProdutoCarrinho> resumoProdutos;
 
@@ -38,7 +37,7 @@ public class Carrinho {
     public Carrinho(Long id, Date data, List<Produto> produtos, Double valortotal) {
         this.id = id;
         this.data = data;
-        this.produtos = produtos;
+//        this.produtos = produtos;
         this.valorTotal = valortotal;
     }
 
@@ -58,13 +57,13 @@ public class Carrinho {
         this.data = data;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
+//    public List<Produto> getProdutos() {
+//        return produtos;
+//    }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
+//    public void setProdutos(List<Produto> produtos) {
+//        this.produtos = produtos;
+//    }
 
     public Double getValorTotal() {
         return valorTotal;
@@ -87,7 +86,7 @@ public class Carrinho {
         return "Carrinho{" +
                 "id=" + id +
                 ", data=" + data +
-                ", produtos=" + produtos +
+//                ", produtos=" + produtos +
                 ", valorTotal=" + valorTotal +
                  '\'' +
                 '}';

@@ -71,7 +71,7 @@ public class CompraController {
 
         System.out.println("Valor total do carrinho: " + carrinho.getValorTotal());
 
-        carrinho.setProdutos(produtos);
+//        carrinho.setProdutos(produtos);
 
 
         Carrinho car = carrinhoService.salvarCarrinho(carrinho);

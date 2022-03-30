@@ -13,12 +13,12 @@ CREATE TABLE tb_carrinho(
     valor_total DOUBLE
 );
 
-CREATE TABLE tb_carrinho_produtos(
+/*CREATE TABLE tb_carrinho_produtos(
     carrinho_id BIGINT,
     produto_id BIGINT,
     FOREIGN  KEY (carrinho_id) REFERENCES  tb_carrinho(id),
     FOREIGN  KEY (produto_id) REFERENCES  tb_produto(id)
-);
+);*/
 
 CREATE TABLE tb_compra(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -43,4 +43,10 @@ CREATE TABLE tb_resumo_produto_carrinho(
     FOREIGN KEY (produto_id) REFERENCES tb_produto(id)
 );
 
+CREATE TABLE tb_carrinho_resumo_produtos(
+    carrinho_id BIGINT,
+    resumo_produtos_id BIGINT,
+    FOREIGN KEY (carrinho_id) REFERENCES tb_carrinho(id),
+    FOREIGN KEY (resumo_produtos_id) REFERENCES tb_resumo_produto_carrinho(id)
+);
 
