@@ -10,6 +10,7 @@ import { CadastroProdutoComponent } from './produtos/cadastro/cadastro-produto/c
 import { CadastroUsuarioComponent } from './autenticacao/cadastro/cadastro-usuario/cadastro-usuario.component';
 import { VendasComponent } from './vendas/vendas/vendas.component';
 import { GerenciamentoUsuarioComponent } from './autenticacao/cadastro/gerenciamento-usuario/gerenciamento-usuario.component';
+import { RecuperaSenhaComponent } from './autenticacao/cadastro/recupera-senha/recupera-senha.component';
 
 
 const routes: Routes = [
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'cadastro-produto', component: CadastroProdutoComponent, canActivate: [LoginGuardGuard]},
   {path: 'cadastro-cliente', component: CadastroUsuarioComponent},
   {path: 'pedidos', component: VendasComponent},
-  {path: 'alterar-usuario', component: GerenciamentoUsuarioComponent}
+  {path: 'alterar-usuario', component: GerenciamentoUsuarioComponent},
+  {path: 'recupera-senha', component: RecuperaSenhaComponent}
 ];
 
 @NgModule({

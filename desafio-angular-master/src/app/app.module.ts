@@ -24,6 +24,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { CadastroUsuarioComponent } from './autenticacao/cadastro/cadastro-usuario/cadastro-usuario.component';
 import { VendasComponent } from './vendas/vendas/vendas.component';
 import { GerenciamentoUsuarioComponent } from './autenticacao/cadastro/gerenciamento-usuario/gerenciamento-usuario.component';
+import { RecuperaSenhaComponent } from './autenticacao/cadastro/recupera-senha/recupera-senha.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { GerenciamentoUsuarioComponent } from './autenticacao/cadastro/gerenciam
     CadastroUsuarioComponent,
     VendasComponent,
     GerenciamentoUsuarioComponent,
+    RecuperaSenhaComponent,
   ],
   imports: [
     BrowserModule,
