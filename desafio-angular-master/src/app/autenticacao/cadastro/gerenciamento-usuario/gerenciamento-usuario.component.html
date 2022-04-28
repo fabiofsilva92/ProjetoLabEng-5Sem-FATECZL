@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="form-group mt-2 ">
-                            <label for="">Rua </label>
+                            <label for="">Endereço </label>
                             <input formControlName="rua" type="text" class="form-control" readonly>
                         </div>
 
@@ -92,10 +92,12 @@
                     <label for="">Senha atual</label>
                     <input formControlName="senhaAntiga" type="password" class="form-control" placeholder="Senha atual" (blur)="verificaBCrypt()">
                     <span style='color:red' *ngIf="erroSenhaNaoConfere">Senhas atual incorreta</span>
+                    <span style='color:red' *ngIf="erroSenhaAntigaVazia">Favor preencher</span>
                 </div>
                 <div class="form-group col-md-6 mt-2">
                     <label for="">Nova Senha</label>
                     <input id="password" (keyup)="verificaForcaSenha();" formControlName="novaSenha" type="password" class="form-control" placeholder="Insira a Senha">
+                    <span style='color:red' *ngIf="erroNovaSenhaVazia">Favor preencher</span>
                     <span style='color:red' *ngIf="erroSenhaFraca">Fraco, insira no mínimo 6 caracteres</span>
                     <span style='color:green' *ngIf="alertSenhaForte"><b>Forte</b></span>
                     <span style='color:orange' *ngIf="erroCaracterEspecial">Médio, insira um caracter especial</span>
@@ -104,12 +106,13 @@
                     <label for="">Repita a nova senha</label>
                     <input id="password" (blur)="verificaIgualdadeSenha();" formControlName="novaSenhaRepetida" type="password" class="form-control" placeholder="Repita a Senha">
                     <span style='color:red' *ngIf="erroRepitaSenha">Senhas não correspondem</span>
+                    <span style='color:red' *ngIf="erroNovaSenhaRepetidaVazia">Favor preencher</span>
                 </div>
             </div>
 
             <div class="d-flex justify-content-start">
                 <button type="submit" class="btn btn-primary mt-3 mb-3" (click)="atualizarSenha()">Atualizar Senha</button>
-                <button type="submit" class="btn btn-danger mt-3 mb-3 ms-5" [routerLink]="['/login']">Cancelar</button>
+                <button type="submit" class="btn btn-danger mt-3 mb-3 ms-5" [routerLink]="['/alterar-usuario']">Cancelar</button>
             </div>
         </form>
 

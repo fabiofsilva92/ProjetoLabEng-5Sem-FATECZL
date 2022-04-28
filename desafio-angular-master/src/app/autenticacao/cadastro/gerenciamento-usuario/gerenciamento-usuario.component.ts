@@ -27,6 +27,9 @@ export class GerenciamentoUsuarioComponent implements OnInit {
   alertSenhaForte: boolean = false;
   alertAtualizado: boolean = false;
   erroCaracterEspecial: boolean = false;
+  erroNovaSenhaVazia: boolean = false;
+  erroNovaSenhaRepetidaVazia: boolean = false;
+  erroSenhaAntigaVazia: boolean = false;
   public cep: string = "";
 
   public erroCEP: boolean = false;
@@ -163,6 +166,22 @@ export class GerenciamentoUsuarioComponent implements OnInit {
    }
 
   atualizarSenha(){
+    if(this.s['novaSenha'].value == ""){
+      this.erroNovaSenhaVazia = true;
+      
+    }else{
+      this.erroNovaSenhaVazia = false;
+    }
+    if(this.s['novaSenhaRepetida'].value == ""){
+      this.erroNovaSenhaRepetidaVazia = true;
+    }else{
+      this.erroNovaSenhaRepetidaVazia = false;
+    }
+    if(this.s['senhaAntiga'].value == ""){
+      this.erroSenhaAntigaVazia = true;
+    }else{
+      this.erroSenhaAntigaVazia = false;
+    }
     var isSenhaCorreta = this.verificaBCrypt();
     if(this.alertSenhaForte && !this.erroRepitaSenha && isSenhaCorreta){
       var novaSenha = bcrypt.hashSync(this.s['novaSenha'].value, 10);

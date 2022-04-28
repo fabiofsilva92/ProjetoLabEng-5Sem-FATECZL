@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { CadastroUsuarioService } from 'src/app/services/cadastro-usuario.service';
 
 @Component({
   selector: 'app-recupera-senha',
@@ -8,14 +10,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class RecuperaSenhaComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) { }
-
-  ngOnInit(): void {
-    this.trocaDeSenhaSolicitada = false;
-    
-  }
-
   loginRecuperaForm !: FormGroup;
+  loginNovaSenha!: FormGroup;
   trocaDeSenhaSolicitada: boolean = false;
   erroSenhaFraca: boolean = false;
   erroRepitaSenha: boolean = false;
@@ -23,8 +19,44 @@ export class RecuperaSenhaComponent implements OnInit {
   alertAtualizado: boolean = false;
   erroCaracterEspecial: boolean = false;
 
+
+  constructor(private formBuilder: FormBuilder, private activateRoute: ActivatedRoute, private cadastroUsuarioService: CadastroUsuarioService) { }
+
+  ngOnInit(): void {
+
+    this.activateRoute.queryParams.subscribe(params => {
+      console.log("params: "+params)
+      console.log("id: "+params['id'])
+    })
+
+    
+    
+    this.loginRecuperaForm = this.formBuilder.group({
+      email:['', Validators.required]
+    })
+
+    this.loginNovaSenha = this.formBuilder.group({
+      novaSenha:['', Validators.required],
+      novaSenhaRepetida:['', Validators.required],
+    })
+    
+  }
+
+  
+
   get s(){
     return this.loginRecuperaForm.controls;
+  }
+
+  solicitarRecuperacaoSenha(){
+    this.cadastroUsuarioService.recuperaSenha(this.s["email"].value).subscribe({
+      next: (data) => {
+        console.log("Solicitação de recuperação bem sucedida: ",data)
+      },
+      error: (err) => {
+        console.log("Olha o erro que deu ao solicitar recuperação de senha: ",err)
+      }
+    });
   }
 
   solicitaTrocaSenha(){

@@ -50,5 +50,14 @@ export class CadastroUsuarioService {
     )
   }
 
+  recuperaSenha(email:any){
+    return this.http.post(AppConstants.baseLogin+"/recupera/"+email, JSON.parse(JSON.stringify(email))).pipe(
+      data => {
+        console.log("Tentativa de recuperar senha: "+data);
+        return data;
+      }
+    )
+  }
+
   
 }

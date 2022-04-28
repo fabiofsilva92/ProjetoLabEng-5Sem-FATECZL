@@ -18,6 +18,17 @@ export class AuthInterceptor implements HttpInterceptor {
 
     // console.log(this.loginService.token);
 
+    
+
+   /* if(localStorage.getItem("usuario") == null && request.method == "POST"){
+      console.log("OLHA O METODO",request.method);
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+    }*/
+
     if(localStorage.getItem("usuario") && this.loginService.token){
       request = request.clone({
         setHeaders: {

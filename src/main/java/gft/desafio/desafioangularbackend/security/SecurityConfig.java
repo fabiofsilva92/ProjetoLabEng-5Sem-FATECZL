@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/v1/auth", "/v1/role", "/v1/cadastro-usuario").permitAll()
+                .antMatchers(HttpMethod.POST,"/v1/auth", "/v1/auth/recupera/*", "/v1/role", "/v1/cadastro-usuario").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(new FiltroAutenticacao(autenticacaoService, usuarioService), UsernamePasswordAuthenticationFilter.class).cors();
