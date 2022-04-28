@@ -1,1 +1,48 @@
-<p>recupera-senha works!</p>
+<div class="container main-container mt-5">
+
+    <div class="">
+        <form [formGroup]="loginRecuperaForm" *ngIf="trocaDeSenhaSolicitada == false">
+            <div>
+                <div class="form-group row text-center">
+                    <h3>Reguperação de senha</h3>
+                </div>
+
+                <div class="form-group">
+                    <div class="d-flex justify-content-center">
+                        <div style="width: 150px;" class="d-flex justify-content-center">
+                            <label for="login" class="pt-2">E-mail </label>
+                        </div>
+                        <input type="text" class="form-control form-login-style ms-2" formControlName="login" name="login" id="login" placeholder="Digite seu e-mail">
+                    </div>
+
+                </div>
+                <div class="form-row" *ngIf="trocaDeSenhaSolicitada == false">
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="button" class="btn btn-primary" style="background-color: rgb(#1A73E8) !important;" (click)="solicitaTrocaSenha()">Solicitar recuperação de senha</button>
+                        <button type="button" class="btn btn-secondary ms-5" [routerLink]="['/login']" style="background-color: white ; color: black !important;">Cancelar</button>
+                    </div>
+                </div>
+
+
+                <div class="form-row" *ngIf="trocaDeSenhaSolicitada">
+                    <div class="form-group col-md-6 mt-2">
+                        <label for="">Nova Senha</label>
+                        <input id="password" (keyup)="verificaForcaSenha();" formControlName="novaSenha" type="password" class="form-control" placeholder="Insira a Senha">
+                        <span style='color:red' *ngIf="erroSenhaFraca">Fraco, insira no mínimo 6 caracteres</span>
+                        <span style='color:green' *ngIf="alertSenhaForte"><b>Forte</b></span>
+                        <span style='color:orange' *ngIf="erroCaracterEspecial">Médio, insira um caracter especial</span>
+                    </div>
+                    <div class="form-group col-md-6 mt-2">
+                        <label for="">Repita a nova senha</label>
+                        <input id="password" (blur)="verificaIgualdadeSenha();" formControlName="novaSenhaRepetida" type="password" class="form-control" placeholder="Repita a Senha">
+                        <span style='color:red' *ngIf="erroRepitaSenha">Senhas não correspondem</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form [formGroup]="loginRecuperaForm">
+
+        </form>
+
+    </div>
+</div>

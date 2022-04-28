@@ -55,6 +55,7 @@ public class AutenticacaoService {
         Date expirar = new Date(hoje.getTime() + Long.parseLong(expiration));
 
         Algorithm algorithm = criarAlgoritmo();
+        
 
         return JWT.create()
                 .withIssuer(issuer)
