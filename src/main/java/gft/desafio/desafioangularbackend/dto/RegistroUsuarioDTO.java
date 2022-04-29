@@ -1,7 +1,7 @@
 package gft.desafio.desafioangularbackend.dto;
 
 public class RegistroUsuarioDTO {
-    private Long id;
+    private String id;
     private String nome;
     private String email;
     private String cpf;
@@ -14,7 +14,7 @@ public class RegistroUsuarioDTO {
     private Boolean is_Active;
     private Long roleID;
 
-    public RegistroUsuarioDTO(Long id, String nome, String email, String cpf, String senha, String cep, String rua, String numero, String bairro, String cidade, Boolean is_Active, Long roleID) {
+    public RegistroUsuarioDTO(String id, String nome, String email, String cpf, String senha, String cep, String rua, String numero, String bairro, String cidade, Boolean is_Active, Long roleID) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -29,11 +29,11 @@ public class RegistroUsuarioDTO {
         this.roleID = roleID;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

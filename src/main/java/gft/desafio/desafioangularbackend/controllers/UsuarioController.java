@@ -50,6 +50,13 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    @GetMapping("recupera/{id}")
+    public ResponseEntity<Usuario> retornarUsuarioPorId(@PathVariable String id){
+        Usuario usuario = usuarioService.buscarUsuarioPorID(id);
+
+        return ResponseEntity.ok(usuario);
+    }
+
     @PostMapping
     public ResponseEntity<Usuario> saveUsuario(@RequestBody Usuario usuario){
         usuario.setRole(roleService.buscarRolePorId(2l));
@@ -61,7 +68,7 @@ public class UsuarioController {
     }
 
     @PutMapping("{id}") //TODO arrumar update de usuario, esta recebendo endereço nulo e role nula
-    public ResponseEntity<Usuario> updateUsuario(@RequestBody RegistroUsuarioDTO usuario, @PathVariable Long id){
+    public ResponseEntity<Usuario> updateUsuario(@RequestBody RegistroUsuarioDTO usuario, @PathVariable String id){
 
         System.out.println("Usuario que chegou: "+usuario);
 
@@ -71,6 +78,20 @@ public class UsuarioController {
                 usuario.getCpf(), usuario.getSenha(),
                 new Endereco(usuario.getCep(), usuario.getRua(), usuario.getNumero(), usuario.getBairro(), usuario.getCidade()),
                 role, usuario.getIs_Active());
+
+//        return ResponseEntity.ok(usuarioUpdate);
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(usuarioUpdate, usuario.getId()));
+    }
+
+    @PutMapping("recupera/{id}") //TODO arrumar update de usuario, esta recebendo endereço nulo e role nula
+    public ResponseEntity<Usuario> updateUsuarioRecuperaSenha(@RequestBody Usuario usuario, @PathVariable String id){
+
+        System.out.println("Usuario que chegou: "+usuario);
+
+        Usuario usuarioUpdate = usuarioService.buscarUsuarioPorID(usuario.getId());
+        if(usuarioUpdate != null){
+            usuarioUpdate = usuario;
+        }
 
 //        return ResponseEntity.ok(usuarioUpdate);
         return ResponseEntity.ok(usuarioService.atualizarUsuario(usuarioUpdate, usuario.getId()));

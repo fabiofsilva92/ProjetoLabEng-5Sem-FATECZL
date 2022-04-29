@@ -4,7 +4,7 @@ nome VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE tb_usuario(
-id BIGINT AUTO_INCREMENT PRIMARY KEY ,
+id VARCHAR (255) NOT NULL PRIMARY KEY,
 nome VARCHAR(255) NOT NULL,
 email VARCHAR(255) NOT NULL,
 cpf VARCHAR(255) NOT NULL,
@@ -26,7 +26,7 @@ values
 ('USUARIO');
 
 INSERT INTO tb_usuario
-(nome, email, cpf, senha, bairro, cep, cidade, numero, rua,  role_id)
+(id, nome, email, cpf, senha, bairro, cep, cidade, numero, rua,  role_id)
 values
-('ADMINISTRADOR DO SISTEMA','admin@gmail.com', '875.804.650-00', '$2a$12$QWqpbKZ4030NyWav.zhWFOSkjptsr5.RyIqiCCyDJOKIwudBZiitO', 'Parque Paulistano', '08080000', 'São Paulo', 841, 1, '1'),
-('Usuario DO SISTEMA','usuario@gmail.com', '322.292.820-77', '$2a$12$QWqpbKZ4030NyWav.zhWFOSkjptsr5.RyIqiCCyDJOKIwudBZiitO', 'Parque Paulistano', '08080000', 'São Paulo', 841, 1,'2');
+('777','ADMINISTRADOR DO SISTEMA','admin@gmail.com', '875.804.650-00', '$2a$12$QWqpbKZ4030NyWav.zhWFOSkjptsr5.RyIqiCCyDJOKIwudBZiitO', 'Parque Paulistano', '08080000', 'São Paulo', 841, 1, '1'),
+('888','Usuario DO SISTEMA','usuario@gmail.com', '322.292.820-77', '$2a$12$QWqpbKZ4030NyWav.zhWFOSkjptsr5.RyIqiCCyDJOKIwudBZiitO', 'Parque Paulistano', '08080000', 'São Paulo', 841, 1,'2');

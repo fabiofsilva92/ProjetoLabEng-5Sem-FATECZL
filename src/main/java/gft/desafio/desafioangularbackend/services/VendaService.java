@@ -42,10 +42,10 @@ public class VendaService {
         vendaRepository.delete(venda);
     }
 
-    public List<Venda> buscarVendasPorUsuario(Long id) {
+    public List<Venda> buscarVendasPorUsuario(String id) {
         List<Venda> all = vendaRepository.findAll();
 
-        List<Venda> toReturn = all.stream().filter(v -> v.getUsuario().getId() == id).collect(Collectors.toList());
+        List<Venda> toReturn = all.stream().filter(v -> v.getUsuario().getId().equals(id)).collect(Collectors.toList());
 
         toReturn.forEach(v -> System.out.println(v));
         return toReturn;

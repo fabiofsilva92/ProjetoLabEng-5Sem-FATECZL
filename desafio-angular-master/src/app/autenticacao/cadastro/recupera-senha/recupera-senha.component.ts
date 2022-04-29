@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CadastroUsuarioService } from 'src/app/services/cadastro-usuario.service';
+import * as bcrypt from "bcryptjs";
 
 @Component({
   selector: 'app-recupera-senha',
@@ -18,7 +19,8 @@ export class RecuperaSenhaComponent implements OnInit {
   alertSenhaForte: boolean = false;
   alertAtualizado: boolean = false;
   erroCaracterEspecial: boolean = false;
-
+  idParaTrocaDeSenha: any;
+  usuarioParaTroca: any;
 
   constructor(private formBuilder: FormBuilder, private activateRoute: ActivatedRoute, private cadastroUsuarioService: CadastroUsuarioService) { }
 
@@ -27,9 +29,10 @@ export class RecuperaSenhaComponent implements OnInit {
     this.activateRoute.queryParams.subscribe(params => {
       console.log("params: "+params)
       console.log("id: "+params['id'])
+      this.idParaTrocaDeSenha = params['id'];
     })
 
-    
+    console.log("AAA TESTE")
     
     this.loginRecuperaForm = this.formBuilder.group({
       email:['', Validators.required]
@@ -39,13 +42,54 @@ export class RecuperaSenhaComponent implements OnInit {
       novaSenha:['', Validators.required],
       novaSenhaRepetida:['', Validators.required],
     })
+
+    if(this.idParaTrocaDeSenha != null){
+      this.trocaDeSenhaSolicitada = true
+      this.cadastroUsuarioService.buscarUsuarioPorId(this.idParaTrocaDeSenha).subscribe({
+        next: (data) => {
+          console.log("Olha o usuario: "+JSON.stringify(data))
+          this.usuarioParaTroca = JSON.parse(JSON.stringify(data));
+        }
+        ,error: (err => {
+          console.log("Erro ao buscar usuario por id: ",err)
+        })
+      })
+    }
     
   }
 
-  
+  get f(){
+    return this.loginNovaSenha.controls;
+  }
 
   get s(){
     return this.loginRecuperaForm.controls;
+  }
+
+  trocarSenha(){
+    if(this.erroRepitaSenha || this.erroSenhaFraca || this.erroCaracterEspecial){
+      console.log("Erro ainda na paagina")
+    }else{
+      //TODO
+      var novaSenha = this.f['novaSenha'].value;
+
+      var novaSenhaEncryptada = bcrypt.hashSync(novaSenha, 10);
+
+      this.usuarioParaTroca.senha = novaSenhaEncryptada;
+
+      this.cadastroUsuarioService.atualizarUsuarioRecupera(this.usuarioParaTroca).subscribe({
+        next: (data) => {
+          console.log("Resultado: " + JSON.stringify(data));
+        },
+        error: (err) => {
+          console.log("Erro ao solicitar troca de senha: " + err)
+        }
+      })
+      
+      console.log("TROCA SENHA:   " + this.usuarioParaTroca.senha + " Nova senha: "+novaSenhaEncryptada);
+
+
+    }
   }
 
   solicitarRecuperacaoSenha(){
@@ -65,11 +109,13 @@ export class RecuperaSenhaComponent implements OnInit {
 
   verificaIgualdadeSenha(){ 
 
-    var isEquals = (this.s['novaSenha'].value == this.s['novaSenhaRepetida'].value)
+    var isEquals = (this.f['novaSenha'].value == this.f['novaSenhaRepetida'].value)
     
     if(!isEquals){
       this.erroRepitaSenha = true;
-    }   
+    } else {
+      this.erroRepitaSenha = false;
+    }  
   }
 
   verificaForcaSenha() { 
@@ -77,7 +123,7 @@ export class RecuperaSenhaComponent implements OnInit {
     var alfabeto = /([a-zA-Z])/;
     var chEspeciais = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
 
-    var password = this.s['novaSenha'].value
+    var password = this.f['novaSenha'].value
 
     if (password.length < 6) {
         this.erroSenhaFraca = true;
