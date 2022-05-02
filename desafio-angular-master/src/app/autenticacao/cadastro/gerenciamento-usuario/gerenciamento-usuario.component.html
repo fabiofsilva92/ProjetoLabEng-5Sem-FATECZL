@@ -3,19 +3,19 @@
     <div class="Cart-Container mt-4">
         <form [formGroup]="cadastroUsuarioForm" class="ms-3" *ngIf="!cadastrado && !isAlterandoSenha && !alertAtualizado">
             <h3 class="mt-3">Gerenciar usuario</h3>
-            <div class="form-row">
-                <div class="form-group col-md-6 mt-2">
+            <div class="form-row" style="width: 80%">
+                <div class="form-group col-md-7 mt-2">
                     <label for="">Nome</label>
                     <input formControlName="nome" type="text" class="form-control" placeholder="Nome completo">
                 </div>
-                <div class="form-group mt-2 col-md-6">
+                <div class="form-group mt-2 col-md-7">
                     <label for="">CPF (somente CPFs válidos)</label>
                     <input formControlName="cpf" type="text" class="form-control" placeholder="Insira o CPF" mask="CPF_CNPJ" (blur)="verificaCPF()">
                     <div class="alert alert-danger" style="width: 350px;" *ngIf="erroCPF">
                         <strong>Erro!</strong> Favor preencher o CPF corretamente.
                     </div>
                 </div>
-                <div class="form-group mt-2 col-md-6">
+                <div class="form-group mt-2 col-md-7">
                     <label for="">CEP (somente CEPs válidos)</label>
                     <input formControlName="cep" type="text" class="form-control" placeholder="Insira o CEP de sua rua" (blur)="verificaCEP()">
                     <div class="alert alert-danger" style="width: 350px;" *ngIf="erroCEP">
@@ -24,7 +24,7 @@
                 </div>
 
 
-                <div class="form-group mt-2 col-md-6" *ngIf="objetoCEP != '' && erroCEP == false">
+                <div class="form-group mt-2 col-md-7" *ngIf="objetoCEP != '' && erroCEP == false">
 
                     <div class="Custom-card ">
                         <div class="spinner-border" *ngIf="!objetoCEP.street" role="status">
@@ -58,23 +58,26 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-6 mt-2">
+                <div class="form-group col-md-7 mt-2">
                     <label for="inputEmail3">Email</label>
-                    <input type="email" formControlName="email" id="inputEmail3" class="form-control" placeholder="Insira o Email">
+                    <input type="email" formControlName="email" id="inputEmail3" class="form-control" placeholder="Insira o Email" readonly>
                     <div class="alert alert-danger" style="width: 350px;" *ngIf="erroEmail">
                         <strong>Erro!</strong> Favor preencher o Email corretamente.
                     </div>
                 </div>
 
             </div>
+            
             <div class="d-flex justify-content-start">
                 <button type="submit" class="btn btn-primary mt-3 mb-3" (click)="atualizarCadastro()">Atualizar</button>
 
                 <button type="submit" class="btn btn-secondary mt-3 mb-3 ms-5" (click)="alterarSenha()">Alterar Senha</button>
 
-                <button type="submit" class="btn btn-danger mt-3 mb-3 ms-5" [routerLink]="['/login']">Cancelar</button>
+                <button type="submit" class="btn btn-danger mt-3 mb-3 ms-5" [routerLink]="['/produtos']">Cancelar</button>
 
             </div>
+
+            <div class="d-flex justify-content-end"><button type="submit"  class="btn btn-warning mt-3 mb-3 ms-5 me-3"  [routerLink]="['/produtos']">Inativar Conta</button></div>
 
 
         </form>
@@ -85,7 +88,7 @@
 
         </div>
 
-        <form *ngIf="isAlterandoSenha" [formGroup]="cadastroSenhaForm" class="ms-3">
+        <form *ngIf="isAlterandoSenha && !alertAtualizado" [formGroup]="cadastroSenhaForm" class="ms-3">
             <h3 class="mt-3">Gerenciar usuario</h3>
             <div class="form-row">
                 <div class="form-group col-md-6 mt-2">
@@ -112,7 +115,7 @@
 
             <div class="d-flex justify-content-start">
                 <button type="submit" class="btn btn-primary mt-3 mb-3" (click)="atualizarSenha()">Atualizar Senha</button>
-                <button type="submit" class="btn btn-danger mt-3 mb-3 ms-5" [routerLink]="['/alterar-usuario']">Cancelar</button>
+                <button type="submit" class="btn btn-danger mt-3 mb-3 ms-5" [routerLink]="['/produtos']">Cancelar</button>
             </div>
         </form>
 

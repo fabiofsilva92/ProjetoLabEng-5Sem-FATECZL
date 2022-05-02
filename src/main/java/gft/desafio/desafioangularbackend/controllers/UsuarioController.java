@@ -68,19 +68,13 @@ public class UsuarioController {
     }
 
     @PutMapping("{id}") //TODO arrumar update de usuario, esta recebendo endereço nulo e role nula
-    public ResponseEntity<Usuario> updateUsuario(@RequestBody RegistroUsuarioDTO usuario, @PathVariable String id){
+    public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario, @PathVariable String id){
 
         System.out.println("Usuario que chegou: "+usuario);
 
-        Role role = roleService.buscarRolePorId(usuario.getRoleID());
+        Usuario usuario1 = usuarioService.buscarUsuarioPorID(id);
 
-        Usuario usuarioUpdate = new Usuario(usuario.getId(), usuario.getNome(), usuario.getEmail(),
-                usuario.getCpf(), usuario.getSenha(),
-                new Endereco(usuario.getCep(), usuario.getRua(), usuario.getNumero(), usuario.getBairro(), usuario.getCidade()),
-                role, usuario.getIs_Active());
-
-//        return ResponseEntity.ok(usuarioUpdate);
-        return ResponseEntity.ok(usuarioService.atualizarUsuario(usuarioUpdate, usuario.getId()));
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(usuario, usuario.getId()));
     }
 
     @PutMapping("recupera/{id}") //TODO arrumar update de usuario, esta recebendo endereço nulo e role nula
