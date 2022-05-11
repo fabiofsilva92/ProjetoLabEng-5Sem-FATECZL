@@ -54,6 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/v1/auth", "/v1/auth/recupera/*", "/v1/role", "/v1/cadastro-usuario").permitAll()
+                .antMatchers(HttpMethod.GET,  "/v1/cadastro-usuario/recupera/*" ).permitAll()
+                .antMatchers(HttpMethod.PUT,"/v1/cadastro-usuario/recupera/*" ).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(new FiltroAutenticacao(autenticacaoService, usuarioService), UsernamePasswordAuthenticationFilter.class).cors();

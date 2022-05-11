@@ -50,6 +50,28 @@ export class CadastroUsuarioService {
     )
   }
 
+  atualizarUsuarioRecupera(usuario:any){
+
+    let params = new HttpParams().set('id', usuario.id);
+
+    console.log("Iniciando atualizarUsuario: ", usuario.id)
+
+    return this.http.put(AppConstants.baseServidor+"cadastro-usuario/recupera/"+usuario.id, JSON.parse(JSON.stringify(usuario))).pipe(
+      data => {
+        console.log(data);
+        return data;
+      }
+    )
+  }
+
+  buscarUsuarioPorId(id:any){
+    return this.http.get(AppConstants.baseServidor+"cadastro-usuario/recupera/"+id).pipe(
+      data => {
+        return data;
+      }
+    )
+  }
+
   recuperaSenha(email:any){
     return this.http.post(AppConstants.baseLogin+"/recupera/"+email, JSON.parse(JSON.stringify(email))).pipe(
       data => {

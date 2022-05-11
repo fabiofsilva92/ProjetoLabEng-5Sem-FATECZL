@@ -32,8 +32,13 @@ public class VendaController {
 
         Usuario usuario = usuarioService.retornaUsuarioRequisitante();
 
+        System.out.println("Usuario Requisitado" +usuario);
+
         List<Venda> vendas = vendaService.buscarVendasPorUsuario(usuario.getId());
 
+        vendas.forEach(c -> {
+            System.out.println("VENDA: c "+c);
+        });
 
         return ResponseEntity.ok(vendas);
     }
