@@ -45,13 +45,14 @@ CREATE TABLE tb_resumo_produto_carrinho(
 );
 
 CREATE TABLE tb_cartao_usuario(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     usuario_id BIGINT,
     num_cartao VARCHAR(255),
     FOREIGN KEY (usuario_id) REFERENCES tb_usuario(id)
 );
-
-ALTER TABLE tb_cartao_usuario ADD CONSTRAINT PK_CARTAO_USUARIO PRIMARY KEY (usuario_id);
-ALTER TABLE tb_cartao_usuario ADD CONSTRAINT PK_CARTAO_USUARIO PRIMARY KEY (num_cartao);
+--
+--ALTER TABLE tb_cartao_usuario ADD CONSTRAINT PK_CARTAO_USUARIO PRIMARY KEY (usuario_id);
+--ALTER TABLE tb_cartao_usuario ADD CONSTRAINT PK_CARTAO_USUARIO PRIMARY KEY (num_cartao);
 
 
 
