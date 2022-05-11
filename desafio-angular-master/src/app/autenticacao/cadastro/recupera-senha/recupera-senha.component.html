@@ -22,7 +22,7 @@
                 </div>
             </div>
         </form>
-        <form [formGroup]="loginRecuperaForm" *ngIf="trocaDeSenhaSolicitada == true">
+        <form [formGroup]="loginNovaSenha" *ngIf="trocaDeSenhaSolicitada == true">
             <div>
                 <div class="form-group row text-center">
                     <h3>Reguperação de senha222</h3>
@@ -33,6 +33,10 @@
                             <label for="login" class="pt-2">Nova Senha:</label>
                         </div>
                         <input type="password" class="form-control form-login-style ms-2" (keyup)="verificaForcaSenha();" formControlName="novaSenha" name="login" id="password" placeholder="Digite a nova senha">
+
+                        
+                    </div>
+                    <div class="form-group row text-center">
                         <span style='color:red' *ngIf="erroSenhaFraca">Fraco, insira no mínimo 6 caracteres</span>
                         <span style='color:green' *ngIf="alertSenhaForte"><b>Forte</b></span>
                         <span style='color:orange' *ngIf="erroCaracterEspecial">Médio, insira um caracter especial</span>
@@ -42,12 +46,15 @@
                             <label for="login" class="pt-2">Repita Nova Senha:</label>
                         </div>
                         <input type="password" class="form-control form-login-style ms-2" (blur)="verificaIgualdadeSenha();" formControlName="novaSenhaRepetida" name="login" id="password" placeholder="Repita a nova senha">
+                    </div>
+                    <div class="form-group row text-center">
                         <span style='color:red' *ngIf="erroRepitaSenha">Senhas não correspondem</span>
                     </div>
+                    
                 </div>
                 <div class="" >
                     <div class="d-flex justify-content-center mt-3">
-                        <button type="button" class="btn btn-primary" style="background-color: rgb(#1A73E8) !important;" (click)="solicitarRecuperacaoSenha()">Solicitar recuperação de senha</button>
+                        <button type="button" class="btn btn-primary" style="background-color: rgb(#1A73E8) !important;" (click)="trocarSenha()">Trocar Senha</button>
                         <button type="button" class="btn btn-secondary ms-5" [routerLink]="['/login']" style="background-color: white ; color: black !important;">Cancelar</button>
                     </div>
                 </div>

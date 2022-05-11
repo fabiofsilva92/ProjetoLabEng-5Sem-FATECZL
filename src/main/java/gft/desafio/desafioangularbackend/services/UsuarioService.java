@@ -59,7 +59,7 @@ public class UsuarioService implements UserDetailsService {
         return new UsuarioCustomUserDetails(buscarPorEmail(login));
     }
 
-    public Usuario buscarUsuarioPorID(Long idUsuario) {
+    public Usuario buscarUsuarioPorID(String idUsuario) {
         Optional<Usuario> byId = usuarioRepository.findById(idUsuario);
         if(byId.isEmpty()) throw new RuntimeException("Usuário não encontrado no findbyid");
 
@@ -72,14 +72,14 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario atualizarUsuario(Usuario usuario, Long id){
+    public Usuario atualizarUsuario(Usuario usuario, String id){
         Usuario original = buscarUsuarioPorID(id);
         usuario.setId(original.getId());
 
         return salvarUsuario(usuario);
     }
 
-    public void excluirUsuario(Long id){
+    public void excluirUsuario(String id){
         Usuario usuario = buscarUsuarioPorID(id);
         usuarioRepository.delete(usuario);
     }

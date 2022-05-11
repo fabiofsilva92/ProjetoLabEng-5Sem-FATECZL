@@ -46,6 +46,8 @@ public class CompraController {
 
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        System.out.println("Usuario requisitado no savecompra: "+usuario);
+
         Date data = new Date();
 
         System.out.println("RESUMAO : " + carrinho.getResumoProdutos());

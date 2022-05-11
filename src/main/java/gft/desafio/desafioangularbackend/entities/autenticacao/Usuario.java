@@ -3,6 +3,7 @@ package gft.desafio.desafioangularbackend.entities.autenticacao;
 
 import com.sun.istack.NotNull;
 import gft.desafio.desafioangularbackend.entities.Endereco;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -13,8 +14,9 @@ import javax.validation.constraints.NotEmpty;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
     @NotEmpty
     private String nome;
     private String email;
@@ -48,7 +50,7 @@ public class Usuario {
                 '}';
     }
 
-    public Usuario(Long id, String nome, String email, String cpf, String senha, Endereco endereco, Role role, Boolean isActive) {
+    public Usuario(String id, String nome, String email, String cpf, String senha, Endereco endereco, Role role, Boolean isActive) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -60,11 +62,11 @@ public class Usuario {
         this.isActive = isActive;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
