@@ -44,4 +44,14 @@ CREATE TABLE tb_resumo_produto_carrinho(
     FOREIGN KEY (produto_id) REFERENCES tb_produto(id)
 );
 
+CREATE TABLE tb_cartao_usuario(
+    usuario_id BIGINT,
+    num_cartao VARCHAR(255),
+    FOREIGN KEY (usuario_id) REFERENCES tb_usuario(id)
+);
+
+ALTER TABLE tb_cartao_usuario ADD CONSTRAINT PK_CARTAO_USUARIO PRIMARY KEY (usuario_id);
+ALTER TABLE tb_cartao_usuario ADD CONSTRAINT PK_CARTAO_USUARIO PRIMARY KEY (num_cartao);
+
+
 
