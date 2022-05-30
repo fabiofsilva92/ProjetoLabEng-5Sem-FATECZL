@@ -44,9 +44,15 @@ CREATE TABLE tb_resumo_produto_carrinho(
     FOREIGN KEY (produto_id) REFERENCES tb_produto(id)
 );
 
+
+
 CREATE TABLE tb_cartao_usuario(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     usuario_id BIGINT,
+    nome_titular VARCHAR(255),
+    cpf_titular VARCHAR(255),
+    validade VARCHAR(255),
+    cod_seguranca VARCHAR(255),
     num_cartao VARCHAR(255),
     FOREIGN KEY (usuario_id) REFERENCES tb_usuario(id)
 );
