@@ -48,7 +48,7 @@ CREATE TABLE tb_resumo_produto_carrinho(
 
 CREATE TABLE tb_cartao_usuario(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    usuario_id BIGINT,
+    usuario_id VARCHAR(255),
     nome_titular VARCHAR(255),
     cpf_titular VARCHAR(255),
     validade VARCHAR(255),

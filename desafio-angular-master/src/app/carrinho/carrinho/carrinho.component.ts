@@ -27,8 +27,14 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
   public objetoCEP: any = '';
   public usuario: any;
   public pedidoRealizado: boolean = false;
+  public pedidoRealizadoBoleto: boolean = false;
+  public pedidoRealizadoCartao: boolean = false;
   public erroPedido: boolean = false;
   public loadingPedido: boolean = false;
+
+  public boleto: boolean =  false;
+  public cartao: boolean =  true;
+  public escolherMetodo : boolean = false;
 
   //Construtor
   constructor(private compraService: CompraService, private carrinhoService: CarrinhoService,
@@ -147,13 +153,23 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
     this.carrinhoService.enviarTest(this.compras);
   }
 
-  //Finaliza compra
-  checkout() {
+  escolherMetodoPagamento(){
     if (!this.objetoCEP.cep) {
       this.erroCEP = true;
       return
     }
-    this.loadingPedido = true;
+    this.escolherMetodo= true;
+    this.pedidoRealizado=true;
+  }
+
+  //Finaliza compra
+  checkout() {
+/*     if (!this.objetoCEP.cep) {
+      this.erroCEP = true;
+      return
+    }
+    /* this.loadingPedido = true; */
+    /* this.loadingPedido = false; */
     this.carrinhoService.realizarCheckout(this.compras, this.subTotal, this.objetoCEP.cep).subscribe({
       next: (data) => {
         if (data) {
@@ -174,6 +190,16 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
     });
     this.compras = new Array();
     localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(this.compras))
+  }
+
+  selecionaBoleto(){
+    this.boleto = true;
+    this.escolherMetodo= false;
+  }
+
+  selecionaCartao(){
+    this.cartao = true;
+    //TODO fazer chamada e verificar se tem cartão, se tiver preencher automatico senão pedir pra cadastrar
   }
 
   finalizarVenda(compra: any){

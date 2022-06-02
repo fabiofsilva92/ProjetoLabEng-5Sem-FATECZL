@@ -4,6 +4,8 @@ import { CadastroUsuarioService } from 'src/app/services/cadastro-usuario.servic
 import { CarrinhoService } from 'src/app/services/carrinho.service';
 import { GerenciamentoUsuarioService } from 'src/app/services/gerenciamento-usuario.service';
 import * as bcrypt from "bcryptjs";
+import { Router } from '@angular/router';
+import { LoginServiceService } from 'src/app/autenticacao/login/service/login-service.service';
 
 @Component({
   selector: 'app-gerenciamento-usuario',
@@ -37,7 +39,8 @@ export class GerenciamentoUsuarioComponent implements OnInit {
   erroSenhaNaoConfere: boolean = false;
 
   constructor(private gerenciamentoUserService: GerenciamentoUsuarioService, private formBuilder: FormBuilder,
-              private carrinhoService: CarrinhoService, private cadastroUsuarioService: CadastroUsuarioService) { }
+              private carrinhoService: CarrinhoService, private cadastroUsuarioService: CadastroUsuarioService,
+              private router: Router,private loginService: LoginServiceService) { }
 
   ngOnInit(): void {
 
@@ -165,10 +168,47 @@ export class GerenciamentoUsuarioComponent implements OnInit {
     });
    }
 
+   confirmaInativacao(){
+
+
+    
+   }
+
+   inativarUsuario(){
+
+    var usuario = {
+      "id": this.usuario.id,
+      "nome": this.f['nome'].value,
+      "email": this.f['email'].value,
+      "cep": this.f['cep'].value,
+      "rua" : this.f['rua'].value,
+      "numero" : this.f['numero'].value,
+      "bairro" : this.f['bairro'].value,
+      "cidade" : this.f['cidade'].value,
+      "cpf": this.f['cpf'].value,
+      "senha": this.usuario.senha,
+      "is_Active": false,
+      "roleID": this.usuario.role.id,
+    }  
+    
+    this.cadastroUsuarioService.atualizarUsuario(usuario).subscribe({
+      next: (data) =>{
+        console.log("Usuario com informações atualizadas", data);
+        this.alertAtualizado = true;
+        this.loginService.logout();
+      },
+      error: (err) =>{
+        console.log("Deu erro ao atualizar usuario: ", err)
+      }
+    });
+
+
+
+   }
+
   atualizarSenha(){
     if(this.s['novaSenha'].value == ""){
       this.erroNovaSenhaVazia = true;
-      
     }else{
       this.erroNovaSenhaVazia = false;
     }

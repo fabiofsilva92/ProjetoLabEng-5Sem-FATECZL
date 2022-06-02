@@ -48,6 +48,9 @@
     justify-content: space-between;
     align-items: center;
    }
+
+   
+
    .Custom-image-box{
     width: 15%;
     text-align: center;
@@ -192,4 +195,54 @@
     color: #222831;
     padding: 1em;
     width: 400px;
+  }
+
+  .CustomCart-Items2{
+    margin: auto;
+    width: 90%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
+   .Custom-card2{
+    border-radius: 1em;
+    background-color: #FFD52E;
+    color: #222831;
+    padding: 1em;
+    width: 500px;
+  }
+
+  .button-finalizar{
+    margin-top: 5px;
+    margin-bottom: 15px;
+    width: 30%;
+    height: 40px;
+    border: none;
+    background: linear-gradient(to bottom right, #FEF7E7, #FFD52E);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: #202020;
+   }
+   .button-voltar{
+    margin-top: 5px;
+    margin-bottom: 15px;
+    width: 30%;
+    height: 40px;
+    border: none;
+    background: linear-gradient(to bottom right, #FEF7E7, #ff9d2e);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    color: #202020;
+   }
+
+
+  a:hover{
+    cursor: pointer;
   }
