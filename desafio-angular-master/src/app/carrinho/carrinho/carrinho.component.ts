@@ -17,7 +17,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
   //Declaração de variáveis
   public compras = new Array();
   public produtos = new Array();
-  public valorTotal : number = 0;
+  public valorTotal: number = 0;
   public carrinho = {
     "produtos": this.produtos,
     "valorTotal": this.valorTotal
@@ -33,13 +33,13 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
   public erroPedido: boolean = false;
   public loadingPedido: boolean = false;
 
-  public boleto: boolean =  false;
-  public cartao: boolean =  false;
-  public escolherMetodo : boolean = false;
+  public boleto: boolean = false;
+  public cartao: boolean = false;
+  public escolherMetodo: boolean = false;
 
   public cartaoCompleto: any;
 
-  public cartaozinho = {nome: "", cpf: "", numCartao: "", validade: "", codSeguranca: ""};
+  public cartaozinho = { id: "", nome: "", cpf: "", numCartao: "", validade: "", codSeguranca: "" };
 
   cartaoUsuario !: FormGroup;
 
@@ -62,6 +62,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
     this.pedidoRealizado = false;
 
     this.cartaoUsuario = this.formBuilder.group({
+      id: ['', Validators.required],
       nome: ['', Validators.required],
       cpf: ['', Validators.required],
       numCartao: ['', Validators.required],
@@ -70,28 +71,85 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
     })
 
     this.carrinhoService.verificaCartaoUsuario().subscribe({
-      next: (data)=> {
-        console.log("Cartão : ",data);
+      next: (data) => {
+        console.log("Cartão : ", data);
         this.cartaoCompleto = data;
+        this.f['id'].setValue(this.cartaoCompleto.id)
         this.f['nome'].setValue(this.cartaoCompleto.usuario.nome)
         this.f['cpf'].setValue(this.cartaoCompleto.usuario.cpf)
         this.f['numCartao'].setValue(this.cartaoCompleto.numCartao)
         this.f['validade'].setValue(this.cartaoCompleto.validade)
         this.f['codSeguranca'].setValue(this.cartaoCompleto.codSeguranca)
+        console.log("Esse é o cartao do usuario logado: ", this.cartaoCompleto)
       }, error: (err) => {
-        console.log("Erro: ",err)
+        console.log("Erro: ", err)
       }
     })
 
   }
 
-  get f(){
+  //Finaliza compra
+  checkout() {
+    /*     if (!this.objetoCEP.cep) {
+          this.erroCEP = true;
+          return
+        }
+        /* this.loadingPedido = true; */
+    /* this.loadingPedido = false; */
+
+    this.carrinhoService.realizarCheckout(this.compras, this.subTotal, this.objetoCEP.cep).subscribe({
+      next: (data) => {
+        if (data) {
+          if (this.boleto) {
+            this.pedidoRealizadoBoleto = true;
+          } else {
+            this.pedidoRealizadoCartao = true;
+            this.updateCartao();
+          }
+          //this.pedidoRealizado = true;
+          this.loadingPedido = false;
+          console.log("O que retornou do checkout: " + JSON.stringify(data))
+          this.finalizarVenda(data);
+
+        }
+      },
+      error: (err) => {
+        if (err) {
+          this.pedidoRealizado = false;
+          this.erroPedido = true;
+          this.loadingPedido = false;
+        }
+      }
+    });
+    this.compras = new Array();
+    localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(this.compras))
+  }
+
+  updateCartao() {
+    
+    this.cartaozinho.id = this.f['id'].value;
+    this.cartaozinho.nome = this.f['nome'].value
+    this.cartaozinho.cpf = this.f['cpf'].value;
+    this.cartaozinho.numCartao = this.f['numCartao'].value;
+    this.cartaozinho.validade = this.f['validade'].value;
+    this.cartaozinho.codSeguranca = this.f['codSeguranca'].value;
+    this.carrinhoService.updateCartao(this.cartaozinho).subscribe({
+      next: (data:any) => {
+        console.log("OLHA O QUE VOLTOU : ", data)
+      },
+      error: (err:any) => {
+        console.log("Deu erro: ", err)
+      }
+    })
+  }
+
+  get f() {
     return this.cartaoUsuario.controls;
   }
   //Verifica CEP na API especificada no desafio.
   verificaCEP() {
 
-    
+
     this.carrinhoService.verificaCEP(this.cep).subscribe({
       next: (data) => {
         console.log("olha o data: ", data)
@@ -118,7 +176,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
   aumentarQuantidadeProduto(compra: Compra) {
 
     compra.produto.qtdPretentida += 1;
-    compra.quantidade+=1;
+    compra.quantidade += 1;
     if (compra.produto.qtdPretentida > compra.produto.qtdEstoque) compra.produto.qtdPretentida = compra.produto.qtdEstoque;
     compra.valorTotal = compra.produto.qtdPretentida * parseFloat(compra.produto.precoUnitario);
     compra.quantidade = compra.produto.qtdPretentida;
@@ -127,7 +185,7 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
 
   diminuirQuantidadeProduto(compra: Compra) {
     compra.produto.qtdPretentida -= 1;
-    compra.quantidade -=1;
+    compra.quantidade -= 1;
     if (compra.produto.qtdPretentida == 0) compra.produto.qtdPretentida = 1;
     compra.valorTotal = compra.produto.qtdPretentida * parseFloat(compra.produto.precoUnitario);
     compra.quantidade = compra.produto.qtdPretentida;
@@ -137,8 +195,8 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
   calcularSubtotal() {
     this.subTotal = 0;
     this.compras.forEach(element => {
-     
-      this.subTotal = this.subTotal +  (parseFloat(element.quantidade) * parseFloat(element.produto.precoUnitario));
+
+      this.subTotal = this.subTotal + (parseFloat(element.quantidade) * parseFloat(element.produto.precoUnitario));
       console.log("Valor do subtotal" + this.subTotal)
     })
   }
@@ -185,83 +243,42 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
     this.carrinhoService.enviarTest(this.compras);
   }
 
-  escolherMetodoPagamento(){
+  escolherMetodoPagamento() {
     if (!this.objetoCEP.cep) {
       this.erroCEP = true;
       return
     }
-    this.escolherMetodo= true;
-    this.pedidoRealizado=true;
+    this.escolherMetodo = true;
+    this.pedidoRealizado = true;
   }
 
-  //Finaliza compra
-  checkout() {
-/*     if (!this.objetoCEP.cep) {
-      this.erroCEP = true;
-      return
-    }
-    /* this.loadingPedido = true; */
-    /* this.loadingPedido = false; */
-    
-    this.carrinhoService.realizarCheckout(this.compras, this.subTotal, this.objetoCEP.cep).subscribe({
-      next: (data) => {
-        if (data) {
-          if(this.boleto){
-            this.pedidoRealizadoBoleto = true;
-          }else{
-            this.pedidoRealizadoCartao = true;
-            
-            this.cartaozinho.nome = this.f['nome'].value
-            this.cartaozinho.cpf = this.f['cpf'].value;
-            this.cartaozinho.numCartao = this.f['numCartao'].value;
-            this.cartaozinho.validade = this.f['validade'].value;
-            this.cartaozinho.codSeguranca = this.f['codSeguranca'].value;
-            this.carrinhoService.updateCartao(this.cartaozinho)
-          }
-          //this.pedidoRealizado = true;
-          this.loadingPedido = false;
-          console.log("O que retornou do checkout: " + JSON.stringify(data))
-          this.finalizarVenda(data);
 
-        }
-      },
-      error: (err) => {
-        if (err) {
-          this.pedidoRealizado = false;
-          this.erroPedido = true;
-          this.loadingPedido = false;
-        }
-      }
-    });
-    this.compras = new Array();
-    localStorage.setItem("resumoCarrinhoProduto", JSON.stringify(this.compras))
-  }
 
-  selecionaBoleto(){
+  selecionaBoleto() {
     this.boleto = true;
-    this.escolherMetodo= false;
+    this.escolherMetodo = false;
   }
 
-  voltarBoleto(){
+  voltarBoleto() {
     this.boleto = false;
     this.escolherMetodo = true;
   }
 
-  selecionaCartao(){
+  selecionaCartao() {
     this.cartao = true;
     this.escolherMetodo = false;
     //TODO fazer chamada e verificar se tem cartão, se tiver preencher automatico senão pedir pra cadastrar
   }
 
-  voltarCartao(){
+  voltarCartao() {
     this.cartao = false;
     this.escolherMetodo = true;
   }
 
-  finalizarVenda(compra: any){
+  finalizarVenda(compra: any) {
     this.vendaService.salvarVenda(compra).subscribe({
       next: (data) => {
-        console.log("Venda finalizada: ",data)
+        console.log("Venda finalizada: ", data)
       },
       error: (err) => {
         console.log("Deu erro ao finalizar venda: ", err)

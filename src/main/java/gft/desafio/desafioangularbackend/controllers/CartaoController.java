@@ -26,6 +26,18 @@ public class CartaoController {
         return ResponseEntity.ok(cartao);
     }
 
+    @PutMapping
+    public ResponseEntity<Cartao> updateCartao(@RequestBody Cartao cartao){
+        Cartao cartao1 = cartaoService.buscarCartao(cartao.getId());
+
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        cartao.setUsuario(usuario);
+        cartao.setNomeTitular(usuario.getNome());
+        cartao.setCpfTitular(usuario.getCpf());
+        cartaoService.salvarCartao(cartao);
+        return ResponseEntity.ok(cartao);
+    }
+
     @GetMapping
     public ResponseEntity<Cartao> getCartaoDoUsuario(){
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -23,16 +23,22 @@ export class CarrinhoService {
   updateCartao(cartao: any){
     console.log("CARTAO: ", cartao)
 
+    if(cartao.id == '' || cartao.id == null){
+      return this.http.post(AppConstants.baseServidor+"cartao", cartao).pipe(
+          data => {
+            return data;
+          }
+        )
+    }else{
+       return this.http.put(AppConstants.baseServidor+"cartao", cartao).pipe
+      (
+        data => {
+          return data;
+        }
+      )
+    }
 
-    return this.http.post(AppConstants.baseLogin+"cartao", cartao).subscribe(
-      {
-      next: (data: any) => {
-        console.log("Cartao atualizado: ",data)
-      },
-      error: (err: any) => {
-        console.log("Erro atualizando cartao", err)
-      }
-    })
+    
   }
 
   //Verifica o CEP na API invertexto
