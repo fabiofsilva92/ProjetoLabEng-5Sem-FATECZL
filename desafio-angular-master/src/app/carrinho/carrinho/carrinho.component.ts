@@ -5,6 +5,7 @@ import { Produto } from 'src/app/model/produto';
 import { CarrinhoService } from 'src/app/services/carrinho.service';
 import { CompraService } from 'src/app/services/compra.service';
 import { VendasService } from 'src/app/services/vendas.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-carrinho',
@@ -33,11 +34,17 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
   public loadingPedido: boolean = false;
 
   public boleto: boolean =  false;
-  public cartao: boolean =  true;
+  public cartao: boolean =  false;
   public escolherMetodo : boolean = false;
 
+  public cartaoCompleto: any;
+
+  public cartaozinho = {nome: "", cpf: "", numCartao: "", validade: "", codSeguranca: ""};
+
+  cartaoUsuario !: FormGroup;
+
   //Construtor
-  constructor(private compraService: CompraService, private carrinhoService: CarrinhoService,
+  constructor(private formBuilder: FormBuilder, private compraService: CompraService, private carrinhoService: CarrinhoService,
     private vendaService: VendasService, private router: Router) { }
 
   //On Destroy
@@ -54,8 +61,33 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
     this.erroPedido = false;
     this.pedidoRealizado = false;
 
+    this.cartaoUsuario = this.formBuilder.group({
+      nome: ['', Validators.required],
+      cpf: ['', Validators.required],
+      numCartao: ['', Validators.required],
+      validade: ['', Validators.required],
+      codSeguranca: ['', Validators.required]
+    })
+
+    this.carrinhoService.verificaCartaoUsuario().subscribe({
+      next: (data)=> {
+        console.log("Cartão : ",data);
+        this.cartaoCompleto = data;
+        this.f['nome'].setValue(this.cartaoCompleto.usuario.nome)
+        this.f['cpf'].setValue(this.cartaoCompleto.usuario.cpf)
+        this.f['numCartao'].setValue(this.cartaoCompleto.numCartao)
+        this.f['validade'].setValue(this.cartaoCompleto.validade)
+        this.f['codSeguranca'].setValue(this.cartaoCompleto.codSeguranca)
+      }, error: (err) => {
+        console.log("Erro: ",err)
+      }
+    })
+
   }
 
+  get f(){
+    return this.cartaoUsuario.controls;
+  }
   //Verifica CEP na API especificada no desafio.
   verificaCEP() {
 
@@ -170,10 +202,23 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
     }
     /* this.loadingPedido = true; */
     /* this.loadingPedido = false; */
+    
     this.carrinhoService.realizarCheckout(this.compras, this.subTotal, this.objetoCEP.cep).subscribe({
       next: (data) => {
         if (data) {
-          this.pedidoRealizado = true;
+          if(this.boleto){
+            this.pedidoRealizadoBoleto = true;
+          }else{
+            this.pedidoRealizadoCartao = true;
+            
+            this.cartaozinho.nome = this.f['nome'].value
+            this.cartaozinho.cpf = this.f['cpf'].value;
+            this.cartaozinho.numCartao = this.f['numCartao'].value;
+            this.cartaozinho.validade = this.f['validade'].value;
+            this.cartaozinho.codSeguranca = this.f['codSeguranca'].value;
+            this.carrinhoService.updateCartao(this.cartaozinho)
+          }
+          //this.pedidoRealizado = true;
           this.loadingPedido = false;
           console.log("O que retornou do checkout: " + JSON.stringify(data))
           this.finalizarVenda(data);
@@ -197,9 +242,20 @@ export class CarrinhoComponent implements OnInit, OnDestroy {
     this.escolherMetodo= false;
   }
 
+  voltarBoleto(){
+    this.boleto = false;
+    this.escolherMetodo = true;
+  }
+
   selecionaCartao(){
     this.cartao = true;
+    this.escolherMetodo = false;
     //TODO fazer chamada e verificar se tem cartão, se tiver preencher automatico senão pedir pra cadastrar
+  }
+
+  voltarCartao(){
+    this.cartao = false;
+    this.escolherMetodo = true;
   }
 
   finalizarVenda(compra: any){

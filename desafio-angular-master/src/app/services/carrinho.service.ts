@@ -13,6 +13,28 @@ export class CarrinhoService {
 
   constructor(private http: HttpClient) { }
 
+  verificaCartaoUsuario(){
+    return this.http.get(AppConstants.baseServidor+"cartao").pipe(
+      data => {return data}
+    )
+  }
+
+  
+  updateCartao(cartao: any){
+    console.log("CARTAO: ", cartao)
+
+
+    return this.http.post(AppConstants.baseLogin+"cartao", cartao).subscribe(
+      {
+      next: (data: any) => {
+        console.log("Cartao atualizado: ",data)
+      },
+      error: (err: any) => {
+        console.log("Erro atualizando cartao", err)
+      }
+    })
+  }
+
   //Verifica o CEP na API invertexto
   verificaCEP(cep: string) {
     return this.http.get("https://api.invertexto.com/v1/cep/" + cep + "?token=379|ILChWRDkDMtQ2SfI9jqvXuLHY73rAt9v", JSON.parse(JSON.stringify(cep))).pipe(data => {
@@ -69,6 +91,7 @@ export class CarrinhoService {
 
 
   }
+
 
   adicionarAoCarrinho(produto: Produto){
     console.log("Produto solicitado a ser adicionado: ", produto)

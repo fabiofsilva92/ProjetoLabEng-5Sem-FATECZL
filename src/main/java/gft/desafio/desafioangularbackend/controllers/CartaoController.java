@@ -20,6 +20,8 @@ public class CartaoController {
     public ResponseEntity<Cartao> saveCartao(@RequestBody Cartao cartao){
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         cartao.setUsuario(usuario);
+        cartao.setNomeTitular(usuario.getNome());
+        cartao.setCpfTitular(usuario.getCpf());
         cartaoService.salvarCartao(cartao);
         return ResponseEntity.ok(cartao);
     }
@@ -28,6 +30,10 @@ public class CartaoController {
     public ResponseEntity<Cartao> getCartaoDoUsuario(){
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Cartao cartao = cartaoService.buscarCartaoPorUsuario(usuario);
+
+        if (cartao == null){
+            cartao.setUsuario(usuario);
+        }
 
         return ResponseEntity.ok(cartao);
 
